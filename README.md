@@ -3,9 +3,9 @@
 Basic setup instructions for the development environment
 
 ```bash
-python3 -m venv .venv
+python -m venv .venv
 source .venv/bin/activate
-pip install django
+pip install -r requirements.txt
 ```
 Run the development server
 
