@@ -1,0 +1,6 @@
+services:
+  django:
+    build: .
+    container_name: secure_notes
+    ports:
+      - "8000:8000"
