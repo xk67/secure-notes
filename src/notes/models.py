@@ -8,3 +8,6 @@ class Note(models.Model):
     private = models.BooleanField(default=True)
     # How do I handle constraint exceptions caused by duplicate UUID values?
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+
+    def __str__(self):
+        return self.title
