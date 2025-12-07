@@ -6,7 +6,7 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1 
 
-COPY requirements.txt .
+COPY requirements.txt entrypoint.sh .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -17,4 +17,5 @@ USER appuser
  
 EXPOSE 8000
  
-CMD ["python", "./src/manage.py", "runserver", "0.0.0.0:8000"]
+RUN chmod +x /app/entrypoint.sh
+CMD ["/app/entrypoint.sh"]
