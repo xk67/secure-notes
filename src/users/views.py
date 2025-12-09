@@ -1,12 +1,8 @@
-#from django.urls import reverse_lazy
-#from django.views.generic import CreateView
 from .forms import SignUpForm
 from django.shortcuts import render
-from django.core.mail import send_mail
-
-#class SignUpView(CreateView):
-#    form_class = SignUpForm
-#    success_url = reverse_lazy("login")
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 def signup(request):
     if request.method == "POST":
@@ -14,15 +10,24 @@ def signup(request):
        if form.is_valid():
             form.save()
 
+            username = form.cleaned_data['username']
             email = form.cleaned_data['email']
 
-            send_mail(
-                "dev test",
-                "Here is the message.",
-                "dev@secure-notes.dev",
-                [email],
-                fail_silently=False,
+            html_content = render_to_string(
+                "users/verification.html",
+                context={"username": username},
             )
+            text_content = strip_tags(html_content)
+
+            msg = EmailMultiAlternatives(
+                "Email Verification",
+                text_content,
+                "from@example.com",
+                ["to@example.com"],
+            )
+
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
     else:
         form = SignUpForm
     
