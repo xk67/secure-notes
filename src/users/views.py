@@ -33,8 +33,8 @@ def signup(request):
             msg = EmailMultiAlternatives(
                 "Email Verification",
                 text_content,
-                "from@example.com",
-                ["to@example.com"],
+                "noreply@secure-notes.de",
+                [email],
             )
 
             msg.attach_alternative(html_content, "text/html")
