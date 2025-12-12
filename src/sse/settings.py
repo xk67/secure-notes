@@ -129,3 +129,4 @@ EMAIL_HOST = "localhost"
 EMAIL_PORT = "1025"
 #EMAIL_USE_TLS = True
 LOGIN_URL = "login"
+LOGOUT_REDIRECT_URL = "login"
