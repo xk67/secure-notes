@@ -5,7 +5,12 @@ from .forms import NoteForm
 import markdown
 
 @login_required
-def index(request):
+def note(request):
+
+    return render(request, "notes/index.html")
+
+@login_required
+def create_note(request):
     if request.method == "POST":
         form = NoteForm(request.POST)
         if form.is_valid():
@@ -21,4 +26,4 @@ def index(request):
         "html": html
     }
 
-    return render(request, "notes/index.html", context)
+    return render(request, "notes/create.html", context)
