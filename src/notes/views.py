@@ -14,6 +14,8 @@ def create_note(request):
     if request.method == "POST":
         form = NoteForm(request.POST)
         if form.is_valid():
+            note = form.save(commit=False)
+            note.owner = request.user
             form.save()
             html = markdown.markdown(form.cleaned_data['content'])
             #return redirect("notes:index")
