@@ -14,6 +14,8 @@ def create_note(request):
     if request.method == "POST":
         form = NoteForm(request.POST)
         if form.is_valid():
+            note = form.save(commit=False)
+            note.owner = request.user
             form.save()
             html = markdown.markdown(form.cleaned_data['content'])
             #return redirect("notes:index")
@@ -27,3 +29,17 @@ def create_note(request):
     }
 
     return render(request, "notes/create.html", context)
+
+@login_required
+def list_notes(request):
+
+    user = request.user
+    notes_user = user.notes.all()
+    notes_all = Note.objects.filter(private=False).exclude(owner=user)
+
+    context = {
+        "notes_user": notes_user,
+        "notes_all": notes_all
+    }
+
+    return render(request, "notes/list_notes.html", context)
