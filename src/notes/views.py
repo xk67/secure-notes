@@ -27,3 +27,19 @@ def create_note(request):
     }
 
     return render(request, "notes/create.html", context)
+
+@login_required
+def list_notes(request):
+
+    user = request.user
+    notes_user = user.notes.all()
+    for note in notes_user:
+        print(note.uuid)
+    notes_all = Note.objects.filter(private=False).exclude(owner=user)
+
+    context = {
+        "notes_user": notes_user,
+        "notes_all": notes_all
+    }
+
+    return render(request, "notes/list_notes.html", context)
