@@ -35,8 +35,6 @@ def list_notes(request):
 
     user = request.user
     notes_user = user.notes.all()
-    for note in notes_user:
-        print(note.uuid)
     notes_all = Note.objects.filter(private=False).exclude(owner=user)
 
     context = {
