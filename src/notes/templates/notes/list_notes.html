@@ -1,0 +1,15 @@
+<h1>Notes</h1>
+<ul>
+    {% for note in notes_user %}
+        <li>{{ note.title }}</li>
+    {% empty %}
+        <li>You have not created any notes yet</li>
+    {% endfor %}
+</ul>
+<ul>
+    {% for note in notes_all %}
+        <li>{{ note.title }}</li>
+    {% empty %}
+        <li>There are no public notes available</li>
+    {% endfor %}
+</ul>
