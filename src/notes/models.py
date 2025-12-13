@@ -1,8 +1,13 @@
 from django.db import models
+from django.conf import settings
 import uuid
 
 class Note(models.Model):
-    #owner = None
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="notes"
+    )
     title = models.CharField(max_length=32)
     content = models.TextField()
     private = models.BooleanField(default=True)
