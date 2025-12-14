@@ -71,6 +71,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+STATIC_URL = 'static/'
+
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 
