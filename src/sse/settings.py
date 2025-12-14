@@ -1,13 +1,19 @@
 from pathlib import Path
+import environ
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-1x(b7%mhp5)*dnmh5j0jp!7#4=38qhh2(#)ak0u&od0(62_*q2'
+env = environ.Env()
 
-DEBUG = True
+environ.Env.read_env(os.path.join(BASE_DIR, '.env.dev'))
 
-ALLOWED_HOSTS = []
+DEBUG = env.bool("DEBUG", default=False)
+SECRET_KEY = env("SECRET_KEY")
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env.int("EMAIL_PORT")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -86,8 +92,5 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = "notes:index"
-EMAIL_HOST = "localhost"
-EMAIL_PORT = "1025"
-#EMAIL_USE_TLS = True
 LOGIN_URL = "login"
 LOGOUT_REDIRECT_URL = "login"
