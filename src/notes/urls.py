@@ -7,5 +7,6 @@ urlpatterns = [
     path("", views.note, name="index"),
     path("notes/create", views.create_note, name="create_note"),
     path("notes", views.list_notes, name="list_notes"),
-    path("notes/<uuid>", views.show_note, name="show_note")
+    path("notes/<uuid>", views.show_note, name="show_note"),
+    path("api/notes", views.api_list_notes)
 ]
