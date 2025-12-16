@@ -4,11 +4,12 @@ from .models import Note
 from .forms import NoteForm
 from django.http import HttpResponse, Http404
 from .serializers import NoteSerializer, NoteContentSerializer
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 import markdown
 from uuid import UUID
-from rest_framework.generics import get_object_or_404
 
 @login_required
 def note(request):
@@ -61,13 +62,17 @@ def show_note(request, uuid):
     return HttpResponse(html) 
 
 @api_view(['GET'])
-#@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def api_list_notes(request):
 
-    if request.method == "GET":
-        notes = Note.objects.all()
-        serializer = NoteSerializer(notes, many=True)
-        return Response(serializer.data)
+    user = request.user
+    notes_user = user.notes.all()
+    notes_all = Note.objects.filter(private=False).exclude(owner=user)
+    notes = notes_user | notes_all
+
+    serializer = NoteSerializer(notes, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
