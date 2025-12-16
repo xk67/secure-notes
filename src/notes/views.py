@@ -70,6 +70,8 @@ def api_list_notes(request):
         return Response(serializer.data)
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def api_get_note(request, uuid):
     
     try:
