@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from .models import Note
 from .forms import NoteForm
 from django.http import HttpResponse, Http404
+from .serializers import NoteSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 import markdown
 
 @login_required
@@ -54,3 +57,11 @@ def show_note(request, uuid):
         raise Http404()    
 
     return HttpResponse(html) 
+
+@api_view(['GET'])
+def api_list_notes(request):
+
+    if request.method == "GET":
+        notes = Note.objects.all()
+        serializer = NoteSerializer(notes, many=True)
+        return Response(serializer.data)
