@@ -12,5 +12,6 @@ urlpatterns = [
     path("api/notes", views.api_list_notes),
     path('api/note/create', views.api_create_note),
     path("api/note/<uuid>", views.api_get_note),
-    path('api/token', obtain_auth_token)
+    path('api/token', obtain_auth_token),
+    path('note/search', views.search_note, name="search_note")
 ]
