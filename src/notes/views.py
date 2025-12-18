@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Note
-from .forms import NoteForm
+from .forms import NoteForm, NoteSearchForm
 from django.http import HttpResponse, Http404
 from .serializers import NoteSerializer, NoteContentSerializer, NoteCreateSerializer
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework import status
+from django.db.models import Q
 import markdown
 from uuid import UUID
 
@@ -58,9 +59,9 @@ def show_note(request, uuid):
     try:
         html = markdown.markdown(Note.objects.get(uuid=uuid).content)
     except:
-        raise Http404()    
+        raise Http404()
 
-    return HttpResponse(html) 
+    return HttpResponse(html)
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
@@ -79,11 +80,11 @@ def api_list_notes(request):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def api_get_note(request, uuid):
-    
+
     try:
         UUID(uuid, version=4)
     except ValueError:
-        raise Http404() 
+        raise Http404()
 
     try:
         note = Note.objects.get(uuid=uuid)
@@ -106,3 +107,23 @@ def api_create_note(request):
         )
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@login_required
+def search_note(request):
+    if request.method == "GET":
+
+        form = NoteSearchForm(request.GET)
+
+        q = ""
+        notes =  Note.objects.none()
+        if form.is_valid():
+            q = form.cleaned_data['q']
+
+            notes = Note.objects.filter(
+                    (Q(owner=request.user) | Q(private=False)) &
+                    Q(title__icontains=q)
+                ).distinct()
+
+        context = {'form': form, 'notes': notes, 'query': q}
+
+        return render(request, 'notes/search_note.html', context)

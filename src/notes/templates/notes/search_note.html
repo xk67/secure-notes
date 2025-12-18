@@ -1,0 +1,19 @@
+<form method="get">
+    {{ form }}
+    <button type="submit">Search</button>
+</form>
+
+{% if query %}
+<p>Results for: {{ query }}</p>
+<ul>
+    {% for note in notes %}
+    <li>
+        <a href="{% url 'notes:show_note' uuid=note.uuid %}"
+            >{{ note.title }}</a
+        >
+    </li>
+    {% empty %}
+    <li>There are no notes available</li>
+    {% endfor %}
+</ul>
+{% endif %}
