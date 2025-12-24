@@ -2,3 +2,4 @@ Django==5.2.9
 Markdown==3.10
 django-environ==0.12.0
 djangorestframework==3.16.1
+bleach==6.3.0

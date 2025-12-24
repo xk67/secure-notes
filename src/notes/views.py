@@ -10,8 +10,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
-import markdown
 from uuid import UUID
+from .utils import markdown2html_safe
 
 @login_required
 def note(request):
@@ -26,7 +26,7 @@ def create_note(request):
             note = form.save(commit=False)
             note.owner = request.user
             form.save()
-            html = markdown.markdown(form.cleaned_data['content'])
+            html = markdown2html_safe(form.cleaned_data['content'])
             #return redirect("notes:index")
     else:
         form = NoteForm()
@@ -57,7 +57,7 @@ def list_notes(request):
 def show_note(request, uuid):
 
     try:
-        html = markdown.markdown(Note.objects.get(uuid=uuid).content)
+        html = markdown2html_safe(Note.objects.get(uuid=uuid).content)
     except:
         raise Http404()
 
