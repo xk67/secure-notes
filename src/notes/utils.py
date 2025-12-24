@@ -6,6 +6,8 @@ from markdown.inlinepatterns import InlineProcessor
 import xml.etree.ElementTree as etree
 #from django.utils.safestring import mark_safe
 
+ALLOWED_PROTOCOLS = {'http', 'https'}
+
 ALLOWED_TAGS = [
     'p', 'hr', #'br'
     'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
@@ -55,7 +57,7 @@ def markdown2html_safe(content: str):
     html_unsafe = md.convert(content)
     print(html_unsafe)
     # set strip to true?
-    html_safe = bleach.clean(html_unsafe, tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRIBUTES,strip=True)
+    html_safe = bleach.clean(html_unsafe, tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRIBUTES, protocols=ALLOWED_PROTOCOLS,strip=True)
     print(html_safe)
 
     return html_safe
