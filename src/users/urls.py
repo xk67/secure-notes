@@ -2,6 +2,8 @@ from django.urls import path
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, LogoutView
 from . import views
 
+app_name = "users"
+
 urlpatterns = [
     path("login", LoginView.as_view(template_name="users/login.html", redirect_authenticated_user=True), name="login"),
     path("signup", views.signup, name="signup"),

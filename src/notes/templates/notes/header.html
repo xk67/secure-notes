@@ -1,7 +1,7 @@
 <header>
-    <form action="{% url 'logout' %}" method="post">
+    <form action="{% url 'users:logout' %}" method="post">
     {% csrf_token %}
     <button type="submit">Log Out</button>
     </form>
-    <a href="{% url 'profile' %}">Profile</a>
+    <a href="{% url 'users:profile' %}">Profile</a>
 </header>

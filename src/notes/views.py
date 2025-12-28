@@ -14,11 +14,6 @@ from uuid import UUID
 from .utils import markdown2html_safe
 
 @login_required
-def note(request):
-
-    return render(request, "notes/index.html")
-
-@login_required
 def create_note(request):
     if request.method == "POST":
         form = NoteForm(request.POST)
