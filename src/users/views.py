@@ -9,6 +9,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import get_user_model
 from django.http import Http404
+from django.contrib.auth.decorators import login_required
 
 User = get_user_model()
 
@@ -61,3 +62,7 @@ def verify(request, uidb64, token):
 
     # Return 404 for invalid tokens or non-existent users
     raise Http404()
+
+@login_required
+def profile(request):
+    return render(request, 'users/profile.html')
