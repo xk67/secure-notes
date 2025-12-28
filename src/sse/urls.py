@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("notes.urls")),
     path("", include("users.urls")),
-    path("imprint", TemplateView.as_view(template_name="pages/imprint.html"), name="imprint")
+    path("imprint", TemplateView.as_view(template_name="pages/imprint.html"), name="imprint"),
+    path("", TemplateView.as_view(template_name="pages/index.html"), name="index")
 ]
