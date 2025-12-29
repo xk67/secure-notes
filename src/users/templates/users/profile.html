@@ -1,16 +1,3 @@
 <p>Username: {{ user.username }}</p>
 <p>Email: {{ user.email }}</p>
-<form method="post">
-    {% csrf_token %}
-
-    <label>
-        <input type="checkbox" name="confirm" required>
-        I understand that by deleting my account, all related data will be permanently deleted.
-    </label>
-
-    <br><br>
-
-    <button type="submit">
-        Delete my account
-    </button>
-</form>
+<p>Click <a href="{% url 'users:delete_account' %}">here</a> to delete your account</p>

@@ -8,7 +8,7 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
-    
+
     def save(self, commit=True):
         user = super().save(commit=False)
 
@@ -18,3 +18,14 @@ class SignUpForm(UserCreationForm):
             user.save()
 
         return user
+
+class DeleteForm(forms.Form):
+    confirm = forms.BooleanField(
+        label='I understand that by deleting my account, all related data will be permanently deleted.',
+        required=True
+    )
+    password = forms.CharField(
+        label='Password',
+        widget=forms.PasswordInput,
+        required=True
+    )

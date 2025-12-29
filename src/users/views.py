@@ -1,5 +1,5 @@
-from .forms import SignUpForm
-from django.shortcuts import render
+from .forms import SignUpForm, DeleteForm
+from django.shortcuts import render, redirect
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -7,7 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
-from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, get_user_model, logout
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 
@@ -42,7 +42,7 @@ def signup(request):
             msg.send()
     else:
         form = SignUpForm
-    
+
     return render(request, 'users/signup.html', {'form': form})
 
 def verify(request, uidb64, token):
@@ -54,7 +54,7 @@ def verify(request, uidb64, token):
         print(user.username)
     except:
         user = None
-    
+
     if user and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
@@ -66,3 +66,25 @@ def verify(request, uidb64, token):
 @login_required
 def profile(request):
     return render(request, 'users/profile.html')
+
+@login_required
+def delete(request):
+    if request.method == "POST":
+        form = DeleteForm(request.POST)
+        if form.is_valid():
+
+            username = request.user.username
+            password = form.cleaned_data["password"]
+
+            # No need to check confirm, handled by form.is_valid(
+
+            if not authenticate(username=username, password=password):
+                form.add_error('password', 'Invalid password')
+            else:
+                logout(request)
+                request.user.delete()
+                return redirect("index")
+    else:
+        form = DeleteForm()
+
+    return render(request, "users/delete.html", { "form": form })
