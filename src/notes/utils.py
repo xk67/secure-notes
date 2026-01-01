@@ -16,13 +16,16 @@ ALLOWED_TAGS = [
     'pre', 'code',
     'a',
     'em', 'strong',
-    'img', 'iframe'
+    'img', 'iframe',
+    # Consent wrapper elements
+    'div', 'button', 'template'
 ]
 
 ALLOWED_ATTRIBUTES = {
     'a': ['href', 'title'],
     'img': ['src', 'alt'],
-    'iframe': ['src', 'title', 'allow', 'referrerpolicy', 'frameborder']
+    'iframe': ['src', 'title', 'allow', 'referrerpolicy', 'frameborder'],
+    'div': ['class']
 }
 
 EMBED_RE = r'!\[([^\]]*)\]\(embed:([^)]+)\)'
@@ -32,7 +35,16 @@ class EmbedInlineProcessor(InlineProcessor):
         title = m.group(1)
         url = m.group(2)
 
-        iframe = etree.Element("iframe")
+        wrapper = etree.Element("div")
+        wrapper.set("class", "embed-consent")
+
+        button = etree.SubElement(wrapper, "button")
+        button.set("type", "button")
+        button.text = f"Click to load: {title}"
+
+        template = etree.SubElement(wrapper, "template")
+
+        iframe = etree.SubElement(template, "iframe")
         iframe.set("src", url)
         iframe.set("referrerpolicy", "strict-origin-when-cross-origin")
         iframe.set("frameborder", "0")
@@ -41,7 +53,7 @@ class EmbedInlineProcessor(InlineProcessor):
         if title:
             iframe.set("title", title)
 
-        return iframe, m.start(0), m.end(0)
+        return wrapper, m.start(0), m.end(0)
 
 class Yt2iframe(Extension):
    def extendMarkdown(self, md):
