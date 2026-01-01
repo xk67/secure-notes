@@ -38,9 +38,25 @@ class EmbedInlineProcessor(InlineProcessor):
         wrapper = etree.Element("div")
         wrapper.set("class", "embed-consent")
 
+        etree.SubElement(wrapper, "p").text = "Allow content from YouTube?"
+
+        p2 = etree.SubElement(wrapper, "p")
+        p2.text = "This page contains content provided by YouTube. We ask for your consent before loading the content, as it may use cookies and other technologies. You should read "
+
+        privacy_link = etree.SubElement(p2, "a")
+        privacy_link.set("href", "https://policies.google.com/privacy")
+        privacy_link.text = "YouTube's privacy policy"
+        privacy_link.tail = " and "
+
+        cookie_link = etree.SubElement(p2, "a")
+        cookie_link.set("href", "https://policies.google.com/technologies/cookies")
+        cookie_link.text = "cookie policy"
+        cookie_link.tail = " before giving your consent."
+
+
         button = etree.SubElement(wrapper, "button")
         button.set("type", "button")
-        button.text = f"Click to load: {title}"
+        button.text = "Accept and load content"
 
         template = etree.SubElement(wrapper, "template")
 
