@@ -16,13 +16,16 @@ ALLOWED_TAGS = [
     'pre', 'code',
     'a',
     'em', 'strong',
-    'img', 'iframe'
+    'img', 'iframe',
+    # Consent wrapper elements
+    'div', 'button', 'template'
 ]
 
 ALLOWED_ATTRIBUTES = {
     'a': ['href', 'title'],
     'img': ['src', 'alt'],
-    'iframe': ['src', 'title', 'allow', 'referrerpolicy', 'frameborder']
+    'iframe': ['src', 'title', 'allow', 'referrerpolicy', 'frameborder'],
+    'div': ['class']
 }
 
 EMBED_RE = r'!\[([^\]]*)\]\(embed:([^)]+)\)'
@@ -32,7 +35,32 @@ class EmbedInlineProcessor(InlineProcessor):
         title = m.group(1)
         url = m.group(2)
 
-        iframe = etree.Element("iframe")
+        wrapper = etree.Element("div")
+        wrapper.set("class", "embed-consent")
+
+        etree.SubElement(wrapper, "p").text = "Allow content from YouTube?"
+
+        p2 = etree.SubElement(wrapper, "p")
+        p2.text = "This page contains content provided by YouTube. We ask for your consent before loading the content, as it may use cookies and other technologies. You should read "
+
+        privacy_link = etree.SubElement(p2, "a")
+        privacy_link.set("href", "https://policies.google.com/privacy")
+        privacy_link.text = "YouTube's privacy policy"
+        privacy_link.tail = " and "
+
+        cookie_link = etree.SubElement(p2, "a")
+        cookie_link.set("href", "https://policies.google.com/technologies/cookies")
+        cookie_link.text = "cookie policy"
+        cookie_link.tail = " before giving your consent."
+
+
+        button = etree.SubElement(wrapper, "button")
+        button.set("type", "button")
+        button.text = "Accept and load content"
+
+        template = etree.SubElement(wrapper, "template")
+
+        iframe = etree.SubElement(template, "iframe")
         iframe.set("src", url)
         iframe.set("referrerpolicy", "strict-origin-when-cross-origin")
         iframe.set("frameborder", "0")
@@ -41,7 +69,7 @@ class EmbedInlineProcessor(InlineProcessor):
         if title:
             iframe.set("title", title)
 
-        return iframe, m.start(0), m.end(0)
+        return wrapper, m.start(0), m.end(0)
 
 class Yt2iframe(Extension):
    def extendMarkdown(self, md):

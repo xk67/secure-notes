@@ -1,3 +1,4 @@
+{% load static %}
 {% include "notes/header.html" %}
 
 <form method="post">
@@ -6,5 +7,7 @@
     <button type="submit">Create note</button>
 </form>
 {{ html | safe }}
+
+<script src="{% static 'js/embed-consent.js' %}"></script>
 
 {% include "includes/footer.html" %}
