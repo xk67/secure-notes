@@ -1,6 +1,8 @@
 {% load static %}
 {% include "notes/header.html" %}
 
+<a href="{% url 'notes:search_note' %}">Search Notes</a>
+
 <form method="post">
     {% csrf_token %}
     {{ form }}
