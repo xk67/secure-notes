@@ -11,7 +11,7 @@ from uuid import UUID
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def api_list_notes(request):
+def list_notes(request):
 
     user = request.user
     notes_user = user.notes.all()
@@ -24,7 +24,7 @@ def api_list_notes(request):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def api_get_note(request, uuid):
+def get_note(request, uuid):
 
     try:
         UUID(uuid, version=4)
@@ -42,7 +42,7 @@ def api_get_note(request, uuid):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def api_create_note(request):
+def create_note(request):
 
     serializer = NoteCreateSerializer(data=request.data, context={"user": request.user})
 
