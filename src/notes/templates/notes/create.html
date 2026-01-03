@@ -32,6 +32,10 @@
     </div>
 
     <button type="submit">Create note</button>
+
+    {% if note_url %}
+    <p>View your created note: <a href="{{ note_url }}">{{ note_url }}</a></p>
+    {% endif %}
 </form>
 
 <script src="{% static 'js/embed-consent.js' %}"></script>

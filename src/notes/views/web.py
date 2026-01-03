@@ -1,13 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from notes.models import Note
 from notes.forms import NoteForm, NoteSearchForm
 from django.http import HttpResponse, Http404
+from django.urls import reverse
 from django.db.models import Q
 from notes.utils import markdown2html_safe
 
 @login_required
 def create_note(request):
+    note_url = None
     if request.method == "POST":
         form = NoteForm(request.POST)
         if form.is_valid():
@@ -15,11 +17,12 @@ def create_note(request):
             note.owner = request.user
             note.content = markdown2html_safe(form.cleaned_data['content'])
             note.save()
-            return HttpResponse("OK")
+            note_url = request.build_absolute_uri(reverse("notes:show_note", kwargs={"uuid": note.uuid}))
+            form = NoteForm()
     else:
         form = NoteForm()
 
-    return render(request, "notes/create.html", {"form": form})
+    return render(request, "notes/create.html", {"form": form, "note_url": note_url})
 
 @login_required
 def list_notes(request):
