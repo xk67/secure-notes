@@ -12,6 +12,9 @@
     <div>
         <label for="id_title">Title:</label><br>
         {{ form.title }}
+        {% if form.title.errors %}
+        <p style="color: red;">{{ form.title.errors.0 }}</p>
+        {% endif %}
     </div>
 
     <div class="md-editor">
@@ -24,6 +27,9 @@
             {{ form.content }}
             <div id="preview-content"></div>
         </div>
+        {% if form.content.errors %}
+        <p style="color: red;">{{ form.content.errors.0 }}</p>
+        {% endif %}
     </div>
 
     <div>
