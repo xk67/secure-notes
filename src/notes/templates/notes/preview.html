@@ -1,0 +1,13 @@
+{% load static %}
+<script src="{% static 'js/md-editor.js' %}"></script>
+
+<h1>Preview</h1>
+<div>
+    {% csrf_token %}
+    <button id="button-write">Write</button>
+    <button id="button-preview">Preview</button>
+    <div>
+        <textarea></textarea>
+        <div id="preview-content" style="display: none;"></div>
+    </div>
+</div>
