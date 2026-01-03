@@ -70,3 +70,12 @@ def search_note(request):
         context = {'form': form, 'notes': notes, 'query': q}
 
         return render(request, 'notes/search_note.html', context)
+
+@login_required
+def preview_note(request):
+    if request.method == "POST":
+        print(request.POST)
+        markdown = request.POST.get('markdown') or ''
+        return HttpResponse(markdown2html_safe(markdown))
+    else:
+        return render(request, 'notes/preview.html')
