@@ -3,29 +3,26 @@ from django.contrib.auth.decorators import login_required
 from notes.models import Note
 from notes.forms import NoteForm, NoteSearchForm
 from django.http import HttpResponse, Http404
+from django.urls import reverse
 from django.db.models import Q
 from notes.utils import markdown2html_safe
 
 @login_required
 def create_note(request):
+    note_url = None
     if request.method == "POST":
         form = NoteForm(request.POST)
         if form.is_valid():
             note = form.save(commit=False)
             note.owner = request.user
-            form.save()
-            html = markdown2html_safe(form.cleaned_data['content'])
-            #return redirect("notes:index")
+            note.content = markdown2html_safe(form.cleaned_data['content'])
+            note.save()
+            note_url = request.build_absolute_uri(reverse("notes:show_note", kwargs={"uuid": note.uuid}))
+            form = NoteForm()
     else:
         form = NoteForm()
-        html = None
 
-    context = {
-        "form": form,
-        "html": html
-    }
-
-    return render(request, "notes/create.html", context)
+    return render(request, "notes/create.html", {"form": form, "note_url": note_url})
 
 @login_required
 def list_notes(request):

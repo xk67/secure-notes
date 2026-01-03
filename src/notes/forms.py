@@ -6,6 +6,12 @@ class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
         fields = ["title", "content", "private"]
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'id': 'md-textarea',
+                'placeholder': 'Enter your markdown here...',
+            })
+        }
 
 class NoteSearchForm(forms.Form):
     q = forms.CharField(
