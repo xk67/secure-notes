@@ -5,11 +5,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const previewDiv = document.getElementById("preview-content");
 
   buttonWrite.addEventListener("click", function () {
+    if (buttonWrite.classList.contains("active")) return;
+
     textarea.style.display = "block";
     previewDiv.style.display = "none";
+
+    buttonWrite.classList.add("active");
+    buttonPreview.classList.remove("active");
   });
 
   buttonPreview.addEventListener("click", async function () {
+    if (buttonPreview.classList.contains("active")) return;
+
     const markdown = textarea.value;
 
     try {
@@ -29,6 +36,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       textarea.style.display = "none";
       previewDiv.style.display = "block";
+
+      buttonPreview.classList.add("active");
+      buttonWrite.classList.remove("active");
     } catch (error) {
       console.error("Preview failed:", error);
     }
