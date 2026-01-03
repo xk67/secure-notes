@@ -12,5 +12,6 @@ urlpatterns = [
     path('api/note/create', api.create_note),
     path("api/note/<uuid>", api.get_note),
     path('api/token', obtain_auth_token),
-    path('note/search', web.search_note, name="search_note")
+    path('note/search', web.search_note, name="search_note"),
+    path('note/preview', web.preview_note, name="preview_note")
 ]
