@@ -5,6 +5,7 @@ from notes.forms import NoteForm, NoteSearchForm
 from django.http import HttpResponse, Http404
 from django.urls import reverse
 from django.db.models import Q
+from django.core.exceptions import ValidationError
 from notes.utils import markdown2html_safe
 
 @login_required
@@ -42,11 +43,11 @@ def list_notes(request):
 def show_note(request, uuid):
 
     try:
-        html = markdown2html_safe(Note.objects.get(uuid=uuid).content)
-    except:
+        note = Note.objects.get(uuid=uuid)
+    except (Note.DoesNotExist, ValidationError):
         raise Http404()
 
-    return HttpResponse(html)
+    return HttpResponse(note.content)
 
 @login_required
 def search_note(request):
