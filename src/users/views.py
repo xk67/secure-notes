@@ -14,6 +14,10 @@ from django.contrib.auth.decorators import login_required
 User = get_user_model()
 
 def signup(request):
+
+    if request.user.is_authenticated:
+        return redirect('notes:create_note')
+
     if request.method == "POST":
        form = SignUpForm(request.POST)
        if form.is_valid():
