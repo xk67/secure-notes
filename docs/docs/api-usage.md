@@ -23,5 +23,24 @@ $ curl -X POST http://localhost:8000/api/token -d 'username=admin&password=admin
 - Requires a personal access token
 
 ```bash
-$ curl -X GET http://localhost:8000/api/notes -H 'Authorization: Token <your_token>'
+$ curl -X GET http://localhost:8000/api/notes -H 'Authorization: Token <TOKEN>'
+```
+
+## `/api/note/create`
+
+- Create a Note
+- Requires a personal access token
+- JSON keys `title` and `content` are required (`private` defaults to `on`)
+
+```bash
+$ curl -X POST http://localhost:8000/api/note/create \
+-H "Authorization: Token <TOKEN>" \ 
+-H "Content-Type: application/json" \
+-d '{"title":"test", "content":"# test", "privat":"off"}' 
+```
+
+```bash
+$ curl -X POST http://localhost:8000/api/note/create \
+-H "Authorization: Token <TOKEN>" \
+-d 'title=test&content=# test&private=off'
 ```
