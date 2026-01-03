@@ -3,12 +3,36 @@
 
 <a href="{% url 'notes:search_note' %}">Search Notes</a>
 
+{% include "notes/preview.html" %}
+<script src="{% static 'js/md-editor.js' %}"></script>
+
 <form method="post">
     {% csrf_token %}
-    {{ form }}
+
+    <div>
+        <label for="id_title">Title:</label><br>
+        {{ form.title }}
+    </div>
+
+    <div class="md-editor">
+        <div class="md-editor-toolbar">
+            <button type="button" id="button-write" class="active">Write</button>
+            <button type="button" id="button-preview">Preview</button>
+            <div class="toolbar-spacer"></div>
+        </div>
+        <div class="md-editor-content">
+            {{ form.content }}
+            <div id="preview-content"></div>
+        </div>
+    </div>
+
+    <div>
+        {{ form.private }}
+        <label for="id_private">Private</label>
+    </div>
+
     <button type="submit">Create note</button>
 </form>
-{{ html | safe }}
 
 <script src="{% static 'js/embed-consent.js' %}"></script>
 

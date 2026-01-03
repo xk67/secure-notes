@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const buttonWrite = document.getElementById("button-write");
   const buttonPreview = document.getElementById("button-preview");
-  const textarea = document.querySelector("textarea");
+  const textarea = document.getElementById("md-textarea");
   const previewDiv = document.getElementById("preview-content");
 
   buttonWrite.addEventListener("click", function () {

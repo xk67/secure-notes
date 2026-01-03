@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from notes.models import Note
 from notes.forms import NoteForm, NoteSearchForm
@@ -13,19 +13,13 @@ def create_note(request):
         if form.is_valid():
             note = form.save(commit=False)
             note.owner = request.user
-            form.save()
-            html = markdown2html_safe(form.cleaned_data['content'])
-            #return redirect("notes:index")
+            note.content = markdown2html_safe(form.cleaned_data['content'])
+            note.save()
+            return HttpResponse("OK")
     else:
         form = NoteForm()
-        html = None
 
-    context = {
-        "form": form,
-        "html": html
-    }
-
-    return render(request, "notes/create.html", context)
+    return render(request, "notes/create.html", {"form": form})
 
 @login_required
 def list_notes(request):
