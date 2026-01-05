@@ -1,12 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from notes.models import Note
-from notes.forms import NoteForm, NoteSearchForm
+from notes.forms import NoteForm, NoteSearchForm, NoteDeleteForm
 from django.http import HttpResponse, Http404
 from django.urls import reverse
 from django.db.models import Q
 from django.core.exceptions import ValidationError
 from notes.utils import markdown2html_safe
+from django.utils.safestring import mark_safe
 
 @login_required
 def create_note(request):
@@ -40,14 +41,32 @@ def list_notes(request):
     return render(request, "notes/list_notes.html", context)
 
 @login_required
-def show_note(request, uuid):
+def view_note(request, uuid):
 
     try:
         note = Note.objects.get(uuid=uuid)
     except (Note.DoesNotExist, ValidationError):
         raise Http404()
 
-    return HttpResponse(note.content)
+    if request.method == "POST":
+        if note.owner != request.user:
+            raise Http404()
+
+        form = NoteDeleteForm(request.POST)
+        if form.is_valid():
+            note.delete()
+            return redirect("notes:list_notes")
+    else:
+        form = NoteDeleteForm()
+
+    context = {
+        "note_title": note.title,
+        "note_content": mark_safe(note.content),
+        "form": form,
+        "is_owner": note.owner == request.user
+    }
+
+    return render(request, "notes/view_note.html", context)
 
 @login_required
 def search_note(request):
