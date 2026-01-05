@@ -1,6 +1,6 @@
 # API Usage
 
-**Security Note:** This API is only safe to use if requests are made over HTTPS
+**Security Note:** This API is only safe to use if requests are made over HTTPS.
 
 ## `/api/token`
 
@@ -51,5 +51,5 @@ $ curl -X POST http://localhost:8000/api/note/create \
 - Requires a personal access token
 
 ```bash
-curl http://localhost:8000/api/note/<UUID> -H "Authorization: Token <TOKEN>"
+$ curl -X GET http://localhost:8000/api/note/<UUID> -H "Authorization: Token <TOKEN>"
 ```
