@@ -43,26 +43,30 @@ def list_notes(request):
 @login_required
 def view_note(request, uuid):
 
+    try:
+        note = Note.objects.get(uuid=uuid)
+    except (Note.DoesNotExist, ValidationError):
+        raise Http404()
+
     if request.method == "POST":
+        if note.owner != request.user:
+            raise Http404()
+
         form = NoteDeleteForm(request.POST)
         if form.is_valid():
-            try:
-                note = Note.objects.get(uuid=uuid)
-                note.delete()
-            except (Note.DoesNotExist, ValidationError):
-                raise Http404()
+            note.delete()
             return redirect("notes:list_notes")
     else:
         form = NoteDeleteForm()
 
-    try:
-        note = Note.objects.get(uuid=uuid)
-        note_title = note.title
-        note_content = mark_safe(note.content)
-    except (Note.DoesNotExist, ValidationError):
-        raise Http404()
+    context = {
+        "note_title": note.title,
+        "note_content": mark_safe(note.content),
+        "form": form,
+        "is_owner": note.owner == request.user
+    }
 
-    return render(request, "notes/view_note.html", {"note_title": note_title, "note_content": note_content, "form": form})
+    return render(request, "notes/view_note.html", context)
 
 @login_required
 def search_note(request):

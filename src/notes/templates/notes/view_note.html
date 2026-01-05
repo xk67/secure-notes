@@ -1,9 +1,11 @@
 <b>{{ note_title }}</b>
 <hr>
 {{ note_content }}
+{% if is_owner %}
 <hr>
 <form method="post">
     {% csrf_token %}
     {{ form }}
     <button type="submit">Delete note</button>
 </form>
+{% endif %}
