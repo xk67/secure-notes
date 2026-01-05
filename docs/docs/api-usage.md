@@ -1,6 +1,6 @@
 # API Usage
 
-To list and create notes, a token is required
+**Security Note:** This API is only safe to use if requests are made over HTTPS
 
 ## `/api/token`
 
