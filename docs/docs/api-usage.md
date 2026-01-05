@@ -34,13 +34,22 @@ $ curl -X GET http://localhost:8000/api/notes -H 'Authorization: Token <TOKEN>'
 
 ```bash
 $ curl -X POST http://localhost:8000/api/note/create \
--H "Authorization: Token <TOKEN>" \ 
+-H "Authorization: Token <TOKEN>" \
 -H "Content-Type: application/json" \
--d '{"title":"test", "content":"# test", "privat":"off"}' 
+-d '{"title":"test", "content":"# test", "private":"off"}'
 ```
 
 ```bash
 $ curl -X POST http://localhost:8000/api/note/create \
 -H "Authorization: Token <TOKEN>" \
 -d 'title=test&content=# test&private=off'
+```
+
+## `/api/note/<UUID>`
+
+- Retrieve the content of a specific note by its UUID
+- Requires a personal access token
+
+```bash
+curl http://localhost:8000/api/note/<UUID> -H "Authorization: Token <TOKEN>"
 ```
