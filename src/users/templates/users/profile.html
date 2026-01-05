@@ -1,4 +1,8 @@
+{% extends "base.html" %}
+
+{% block main%}
 <p>Username: {{ user.username }}</p>
 <p>Email: {{ user.email }}</p>
 <p>Click <a href="{% url 'users:delete_account' %}">here</a> to delete your account</p>
 <p><a href="{% url 'users:password_reset' %}">Reset password</a></p>
+{% endblock %}

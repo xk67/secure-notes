@@ -1,4 +1,8 @@
+{% extends 'base.html' %}
+
+{% block main %}
 <h1>Secure Notes</h1>
 <p>Write and save notes in Markdown</p>
 <p>Do you have already an account? <a href="{% url 'users:login' %}">Login</a></p>
 <p>If not, <a href="{% url 'users:signup' %}">sign up</a></p>
+{% endblock %}
