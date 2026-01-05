@@ -19,3 +19,9 @@ class NoteSearchForm(forms.Form):
           max_length=32,
           label="Search",
       )
+
+class NoteDeleteForm(forms.Form):
+    confirm = forms.BooleanField(
+        label='Check if you want to delete this note',
+        required=True
+    )

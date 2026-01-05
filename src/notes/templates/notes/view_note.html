@@ -1,0 +1,9 @@
+<b>{{ note_title }}</b>
+<hr>
+{{ note_content }}
+<hr>
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Delete note</button>
+</form>
