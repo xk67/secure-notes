@@ -7,7 +7,7 @@ app_name = "notes"
 urlpatterns = [
     path("notes/create", web.create_note, name="create_note"),
     path("notes", web.list_notes, name="list_notes"),
-    path("notes/<uuid>", web.show_note, name="show_note"),
+    path("notes/<uuid>", web.view_note, name="view_note"),
     path("api/notes", api.list_notes),
     path('api/note/create', api.create_note),
     path("api/note/<uuid>", api.get_note),

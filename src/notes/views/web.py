@@ -40,7 +40,7 @@ def list_notes(request):
     return render(request, "notes/list_notes.html", context)
 
 @login_required
-def show_note(request, uuid):
+def view_note(request, uuid):
 
     try:
         note = Note.objects.get(uuid=uuid)
