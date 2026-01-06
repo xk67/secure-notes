@@ -1,4 +1,4 @@
-name: Run backend tests
+name: Run frontend tests
 
 on:
   push:
@@ -28,4 +28,4 @@ jobs:
       - name: Run tests
         working-directory: ./src
         run: |
-          python manage.py test tests.test_backend
+          python manage.py test tests.test_frontend
