@@ -6,7 +6,7 @@ from django.http import HttpResponse, Http404
 from django.urls import reverse
 from django.db.models import Q
 from django.core.exceptions import ValidationError
-from notes.utils import markdown2html_safe
+from notes.utils import markdown2html_safe, sanitize_title
 from django.utils.safestring import mark_safe
 
 @login_required
@@ -17,6 +17,7 @@ def create_note(request):
         if form.is_valid():
             note = form.save(commit=False)
             note.owner = request.user
+            note.title = sanitize_title(form.cleaned_data['title'])
             note.content = markdown2html_safe(form.cleaned_data['content'])
             note.save()
             note_url = request.build_absolute_uri(reverse("notes:view_note", kwargs={"uuid": note.uuid}))
