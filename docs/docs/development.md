@@ -21,3 +21,7 @@ Development Infrastructure and Workflow
 ## Git Workflow
 
 The project is hosted on GitHub, and development is done using a feature-branch workflow based on relevant issues.
+
+## HTTP Request Testing
+
+ZAP was used to manipulate and analyze HTTP requests, for example for XSS testing and general traffic inspection.
