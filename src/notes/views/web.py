@@ -19,12 +19,12 @@ def create_note(request):
             note.owner = request.user
             note.content = markdown2html_safe(form.cleaned_data['content'])
             note.save()
-            note_url = request.build_absolute_uri(reverse("notes:show_note", kwargs={"uuid": note.uuid}))
+            note_url = request.build_absolute_uri(reverse("notes:view_note", kwargs={"uuid": note.uuid}))
             form = NoteForm()
     else:
         form = NoteForm()
 
-    return render(request, "notes/create.html", {"form": form, "note_url": note_url})
+    return render(request, "notes/create_note.html", {"form": form, "note_url": note_url})
 
 @login_required
 def list_notes(request):
