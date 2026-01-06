@@ -25,3 +25,10 @@ The project is hosted on GitHub, and development is done using a feature-branch 
 ## HTTP Request Testing
 
 ZAP was used to manipulate and analyze HTTP requests, for example for XSS testing and general traffic inspection.
+
+## AI Usage
+
+- Because the project is open source and not behind a legal wall, I am not concerned about sharing the code with AI companies.  
+- I used a combination of ChatGPT via its web interface and various LLMs through the integrated chat, trying ChatGPT 5.2, Claude Opus 4.5, and Gemini 2.5 Flash.
+- To protect myself, I disabled terminal access and file deletion functionality due to possible prompt injection via web search.  
+- I also reviewed every code output for potential vulnerabilities and prompted with secure design in mind
