@@ -12,3 +12,8 @@ Development Infrastructure and Workflow
 - Frontend testing with Selenium
 - Backend testing with the Django test framework
 - Build the application as a Docker image and publish it to the GitHub Container Registry on pushes to main or on releases
+
+## IDE
+
+- At the beginning, I used Codium with Vim and Python extensions
+- Later, I switched to Zed to try speeding up my workflow with an integrated LLM chat and better keyboard shortcut customization
