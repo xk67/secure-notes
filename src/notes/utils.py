@@ -89,3 +89,6 @@ def markdown2html_safe(content: str):
     print(html_safe)
 
     return html_safe
+
+def sanitize_title(title: str):
+    return bleach.clean(title, strip=True)
