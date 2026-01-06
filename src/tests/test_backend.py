@@ -23,3 +23,15 @@ class BackendTests(TestCase):
         json_data = response.json()
         self.assertIn('token', json_data)
         self.assertIsNotNone(json_data['token'])
+
+    def test_html_sanitization_of_note_preview(self):
+
+        self.client.login(username='test', password='test')
+
+        data = {"markdown": '<script>alert("test")</script>'}
+        response = self.client.post(
+            reverse("notes:preview_note"),
+            data
+        )
+
+        self.assertNotIn('script', response.content.decode())

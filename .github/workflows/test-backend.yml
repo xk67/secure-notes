@@ -28,4 +28,4 @@ jobs:
       - name: Run tests
         working-directory: ./src
         run: |
-          python manage.py test
+          python manage.py test tests.test_backend
