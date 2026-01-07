@@ -79,6 +79,8 @@
 
 {% block main %}
 <a href="{% url 'notes:search_note' %}">Search Notes</a>
+<br>
+<a href="{% url 'notes:list_notes' %}">List Notes</a>
 
 <form method="post">
     {% csrf_token %}
