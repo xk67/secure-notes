@@ -1,11 +1,13 @@
-document.querySelectorAll(".embed-consent").forEach((el) => {
-  const button = el.querySelector("button");
-  const template = el.querySelector("template");
+document.addEventListener("click", (e) => {
+  const button = e.target.closest(".embed-consent button");
+  if (!button) return;
 
-  if (!button || !template) return;
+  const embedConsent = button.closest(".embed-consent");
+  if (!embedConsent) return;
 
-  button.addEventListener("click", () => {
-    const content = template.content.cloneNode(true);
-    el.replaceWith(content);
-  });
+  const template = embedConsent.querySelector("template");
+  if (!template) return;
+
+  const content = template.content.cloneNode(true);
+  embedConsent.replaceWith(content);
 });
