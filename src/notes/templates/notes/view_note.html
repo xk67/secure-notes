@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+    <script src="{% static 'js/embed-consent.js' %}"></script>
+{% endblock %}
 
 {% block main%}
 <b>{{ note_title }}</b>
