@@ -1,10 +1,10 @@
 import markdown
 import bleach
-
+import re
+from urllib.parse import urlparse, parse_qs
 from markdown.extensions import Extension
 from markdown.inlinepatterns import InlineProcessor
 import xml.etree.ElementTree as etree
-#from django.utils.safestring import mark_safe
 
 ALLOWED_PROTOCOLS = {'http', 'https'}
 
@@ -29,6 +29,57 @@ ALLOWED_ATTRIBUTES = {
 }
 
 EMBED_RE = r'!\[([^\]]*)\]\(embed:([^)]+)\)'
+
+def extract_youtube_video_id(url: str) -> str | None:
+
+    try:
+        parsed = urlparse(url.strip())
+
+        if parsed.scheme not in ('http', 'https'):
+            return None
+
+        hostname = parsed.hostname
+        if not hostname:
+            return None
+
+        if hostname not in ('youtube.com', 'www.youtube.com', 'youtu.be', 'www.youtu.be'):
+            return None
+
+        video_id = None
+
+        # Handle youtu.be/video_id
+        if hostname in ('youtu.be', 'www.youtu.be'):
+            path_parts = parsed.path.strip('/').split('/')
+            if path_parts and path_parts[0]:
+                video_id = path_parts[0]
+
+        # Handle youtube.com/watch?v=video_id
+        elif hostname in ('youtube.com', 'www.youtube.com'):
+            if parsed.path.startswith('/watch'):
+                query_params = parse_qs(parsed.query)
+                if 'v' in query_params and query_params['v']:
+                    video_id = query_params['v'][0]
+
+        if video_id:
+            video_id = video_id.split('?')[0].split('&')[0].split('/')[0]
+
+            if re.match(r'^[a-zA-Z0-9_-]{10}[AEIMQUYcgkosw048]', video_id):
+                return video_id
+
+        return None
+
+    except Exception:
+        return None
+
+
+def convert_to_youtube_nocookie_embed(url: str) -> str | None:
+
+    video_id = extract_youtube_video_id(url)
+
+    if not video_id:
+        return None
+
+    return f"https://www.youtube-nocookie.com/embed/{video_id}"
 
 class EmbedInlineProcessor(InlineProcessor):
     def handleMatch(self, m, data):
@@ -60,8 +111,13 @@ class EmbedInlineProcessor(InlineProcessor):
 
         template = etree.SubElement(wrapper, "template")
 
+        embed_url = convert_to_youtube_nocookie_embed(url)
+
+        if not embed_url:
+            return None, None, None
+
         iframe = etree.SubElement(template, "iframe")
-        iframe.set("src", url)
+        iframe.set("src", embed_url)
         iframe.set("referrerpolicy", "strict-origin-when-cross-origin")
         iframe.set("frameborder", "0")
         # iframe.set("allowfullscreen", "true")
