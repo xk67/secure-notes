@@ -8,14 +8,12 @@ class NoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Note
-        fields = ["owner", "title", "content", "uuid"]
-        #read_only_fields = ["id", "created_at"]
+        fields = ["title", "content", "uuid"]
 
 class NoteContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = ["content"]
-        read_only_fields = ["content"]
 
 class NoteCreateSerializer(serializers.ModelSerializer):
     class Meta:
