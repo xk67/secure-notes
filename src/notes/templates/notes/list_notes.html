@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
+{% block header %}
+{% include 'header.html' with title="Notes" %}
+{% endblock %}
+
 {% block main%}
-<h1>Notes</h1>
 <ul>
     {% for note in notes_user %}
         <li><a href="{% url 'notes:view_note' uuid=note.uuid %}">{{ note.title }}</a></li>

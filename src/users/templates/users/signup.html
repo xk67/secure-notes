@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
+{% block header %}
+{% include 'header.html' with title="Sign Up" %}
+{% endblock %}
+
 {% block main%}
-<h2>Sign up</h2>
 <form method="post">
   {% csrf_token %}
   {{ form }}

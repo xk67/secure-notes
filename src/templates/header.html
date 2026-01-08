@@ -1,0 +1,14 @@
+<header style="background-color: #f0f0f0; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+    <div>
+        <h2 style="margin: 0px;">{{ title }}</h2>
+    </div>
+    {% if user.is_authenticated %}
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <a href="{% url 'users:profile' %}" style="text-decoration: none; color: #333; padding: 8px 16px; background-color: #e0e0e0; border-radius: 4px; border: 1px solid #ccc; display: inline-block; font-weight: bold;">Profile</a>
+        <form action="{% url 'users:logout' %}" method="post" style="margin: 0;">
+            {% csrf_token %}
+            <button type="submit" style="padding: 8px 16px; background-color: #e0e0e0; border: 1px solid #ccc; border-radius: 4px; color: #333; font-size: inherit; cursor: pointer;">Log Out</button>
+        </form>
+    </div>
+    {% endif %}
+</header>

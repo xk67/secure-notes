@@ -1,7 +1,0 @@
-<header>
-    <form action="{% url 'users:logout' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Log Out</button>
-    </form>
-    <a href="{% url 'users:profile' %}">Profile</a>
-</header>

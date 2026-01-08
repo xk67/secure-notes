@@ -5,9 +5,11 @@
     <script src="{% static 'js/embed-consent.js' %}"></script>
 {% endblock %}
 
+{% block header %}
+{% include 'header.html' with title=note_title %}
+{% endblock %}
+
 {% block main%}
-<b>{{ note_title }}</b>
-<hr>
 {{ note_content }}
 {% if is_owner %}
 <hr>

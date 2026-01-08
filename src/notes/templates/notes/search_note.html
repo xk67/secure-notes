@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block header %}
+{% include 'header.html' with title="Search Note" %}
+{% endblock %}
+
 {% block main%}
 <form method="get">
     {{ form }}
