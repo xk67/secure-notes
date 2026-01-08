@@ -77,6 +77,10 @@
     </style>
 {% endblock %}
 
+{% block header %}
+{% include 'header.html' with title="Create Note" %}
+{% endblock %}
+
 {% block main %}
 <a href="{% url 'notes:search_note' %}">Search Notes</a>
 <br>

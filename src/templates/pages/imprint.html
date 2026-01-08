@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 
+{% block header %}
+{% include 'header.html' with title="Imprint" %}
+{% endblock %}
+
 {% block main%}
-<h1>Imprint</h1>
 <p>Max Mustermann<br>
 Musterstraße 12<br>
 12345 Musterstadt<br>
 Germany</p>
 
-<h4>Contact</h4>
+<b>Contact</b>
 <p>Phone: +49 123 456789<br>
 E-Mail: max.mustermann@secure-notes.de</p>
 {% endblock %}

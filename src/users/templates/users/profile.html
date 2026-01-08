@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block header %}
+{% include 'header.html' with title="Profile" %}
+{% endblock %}
+
 {% block main%}
 <p>Username: {{ user.username }}</p>
 <p>Email: {{ user.email }}</p>

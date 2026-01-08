@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
+{% block header %}
+{% include 'header.html' with title="Account Deletion" %}
+{% endblock %}
+
 {% block main%}
-<h1>Account deletion</h1>
 
 {% if messages %}
     {% for message in messages %}
