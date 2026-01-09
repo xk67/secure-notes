@@ -12,6 +12,7 @@ from cryptography.fernet import Fernet
 from django.conf import settings
 import hashlib
 import base64
+from django.contrib import messages
 
 User = get_user_model()
 
@@ -51,6 +52,9 @@ def signup(request):
 
             msg.attach_alternative(html_content, "text/html")
             msg.send()
+
+            messages.success(request, 'Account created successfully! Please check your emails to verify your account.')
+            return redirect('users:signup')
     else:
         form = SignUpForm
 
