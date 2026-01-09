@@ -26,9 +26,16 @@
         {% block main %}{% endblock %}
     </main>
 
-    <footer style="text-align:center; padding:1em 0; border-top:1px;">
-        <hr>
-        <a href="{% url 'imprint' %}">Imprint</a>
+    <footer style="background-color: #f0f0f0 ; text-align:center; padding:2px;">
+        <style>
+        a.imprint {
+            text-decoration: none;
+        }
+        a.imprint:visited {
+            color: inherit;
+        }
+        </style>
+        <a class="imprint" href="{% url 'imprint' %}" style="color: black;  ">Imprint</a>
     </footer>
 </body>
 </html>
