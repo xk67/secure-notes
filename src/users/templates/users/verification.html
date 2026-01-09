@@ -1,1 +1,1 @@
-<p>Hello {{ username }}, please verify your email: <a href="http://{{ domain }}{% url 'users:verify' uidb64=uid token=token %}">http://{{ domain }}{% url 'users:verify' uidb64=uid token=token %}</a></p>
+<p>Hello {{ username }}, please verify your email: <a href="http://{{ domain }}{% url 'users:verify' token=token %}">http://{{ domain }}{% url 'users:verify' token=token %}</a></p>
