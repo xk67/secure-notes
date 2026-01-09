@@ -5,9 +5,18 @@
 {% endblock %}
 
 {% block main%}
+
+{% if messages %}
+  <div style="background-color: #d4edda; color: #155724; padding: 15px; margin-bottom: 20px; border: 1px solid #c3e6cb; border-radius: 4px;">
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+  </div>
+{% endif %}
+
 <form method="post">
   {% csrf_token %}
-  
+
   {% if form.username.errors %}
     <div style="color: red; margin-bottom: 10px;">
       {{ form.username.errors }}
@@ -17,7 +26,7 @@
     <label for="{{ form.username.id_for_label }}">Username:</label><br>
     {{ form.username }}
   </div>
-  
+
   {% if form.email.errors %}
     <div style="color: red; margin-bottom: 10px;">
       {{ form.email.errors }}
@@ -27,7 +36,7 @@
     <label for="{{ form.email.id_for_label }}">Email:</label><br>
     {{ form.email }}
   </div>
-  
+
   {% if form.password1.errors %}
     <div style="color: red; margin-bottom: 10px;">
       {{ form.password1.errors }}
@@ -37,7 +46,7 @@
     <label for="{{ form.password1.id_for_label }}">Password:</label><br>
     {{ form.password1 }}
   </div>
-  
+
   {% if form.password2.errors %}
     <div style="color: red; margin-bottom: 10px;">
       {{ form.password2.errors }}
@@ -47,13 +56,13 @@
     <label for="{{ form.password2.id_for_label }}">Confirm Password:</label><br>
     {{ form.password2 }}
   </div>
-  
+
   {% if form.non_field_errors %}
     <div style="color: red; margin-bottom: 10px;">
       {{ form.non_field_errors }}
     </div>
   {% endif %}
-  
+
   <button type="submit">Sign Up</button>
 </form>
 {% endblock %}
