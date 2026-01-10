@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.core.exceptions import ValidationError
 from notes.utils import markdown2html_safe, sanitize_title
 from django.utils.safestring import mark_safe
+from django.views.decorators.http import require_POST
 
 @login_required
 def create_note(request):
@@ -90,10 +91,7 @@ def search_note(request):
         return render(request, 'notes/search_note.html', context)
 
 @login_required
+@require_POST
 def preview_note(request):
-    if request.method == "POST":
-        print(request.POST)
-        markdown = request.POST.get('markdown') or ''
-        return HttpResponse(markdown2html_safe(markdown))
-    else:
-        return render(request, 'notes/preview.html')
+    markdown = request.POST.get('markdown') or ''
+    return HttpResponse(markdown2html_safe(markdown).encode())
