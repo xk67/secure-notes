@@ -44,3 +44,12 @@ Framework for building APIs in Django
 - Actively maintained on [GitHub](https://github.com/encode/django-rest-framework) and well documented
 - Released under the BSD 3-Clause License
 - Chosen for its seamless integration with the Django ecosystem and its built-in token authentication
+
+### Bleach
+
+Python library for HTML sanitization  
+
+- Version `6.3.0`
+- Actively maintained on [GitHub](https://github.com/mozilla/bleach) by the well known Mozilla team
+- Released under the Apache 2.0 License
+- Chosen for its easy to use integration and custom sanitization rules
