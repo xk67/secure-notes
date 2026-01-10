@@ -22,3 +22,16 @@ Python library for markdown to html translation
 - Well known and actively maintained on [Github](https://github.com/Python-Markdown/markdown)
 - It is released under the BSD-3-Clause License
 - Chosen because of its easy extensibility, allowing the markdown interpreter to be extended with a custom extension for the social plugin
+
+### Django-environ
+
+Python library for reading environment variables in Django projects with type casting and validation
+
+- Version `0.12.0`
+- Not currently actively maintained, see [GitHub](https://github.com/joke2k/django-environ)
+- Why this is not an issue for this project:
+    - There are no dependencies that need frequent updates
+    - No relevant security issues or open pull requests
+    - It is just a library to read environment variables from a file at Django startup
+- Released under the MIT License
+- Chosen because of its automatic type casting and validation of read variables
