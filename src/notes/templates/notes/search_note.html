@@ -15,7 +15,7 @@
 <ul>
     {% for note in notes %}
     <li>
-        <a href="{% url 'notes:show_note' uuid=note.uuid %}"
+        <a href="{% url 'notes:view_note' uuid=note.uuid %}"
             >{{ note.title }}</a
         >
     </li>
