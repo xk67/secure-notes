@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.core.exceptions import ValidationError
 from notes.utils import markdown2html_safe, sanitize_title
 from django.utils.safestring import mark_safe
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 
 @login_required
 def create_note(request):
@@ -71,24 +71,31 @@ def view_note(request, uuid):
     return render(request, "notes/view_note.html", context)
 
 @login_required
+@require_GET
 def search_note(request):
-    if request.method == "GET":
 
-        form = NoteSearchForm(request.GET)
+    form = NoteSearchForm(request.GET)
 
-        q = ""
-        notes =  Note.objects.none()
-        if form.is_valid():
-            q = form.cleaned_data['q']
+    q = ""
+    notes_private = Note.objects.none()
+    notes_public = Note.objects.none()
 
-            notes = Note.objects.filter(
-                    (Q(owner=request.user) | Q(private=False)) &
-                    Q(title__icontains=q)
-                ).distinct()
+    if form.is_valid():
+        q = form.cleaned_data['q']
 
-        context = {'form': form, 'notes': notes, 'query': q}
+        notes_private = Note.objects.filter(
+            owner=request.user,
+            title__icontains=q
+        )
 
-        return render(request, 'notes/search_note.html', context)
+        notes_public = Note.objects.filter(
+            private=False,
+            title__icontains=q
+        ).exclude(owner=request.user)
+
+    context = {'form': form, 'notes_private': notes_private, 'notes_public': notes_public, 'query': q}
+
+    return render(request, 'notes/search_note.html', context)
 
 @login_required
 @require_POST

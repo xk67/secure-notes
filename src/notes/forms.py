@@ -18,6 +18,7 @@ class NoteSearchForm(forms.Form):
           required=True,
           max_length=32,
           label="Search",
+          widget=forms.TextInput(attrs={'placeholder': 'Enter note title'})
       )
 
 class NoteDeleteForm(forms.Form):

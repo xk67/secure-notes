@@ -6,21 +6,36 @@
 
 {% block main%}
 <form method="get">
-    {{ form }}
+    {{ form.q }}
     <button type="submit">Search</button>
 </form>
 
 {% if query %}
 <p>Results for: {{ query }}</p>
+
+<h3>My Notes</h3>
 <ul>
-    {% for note in notes %}
+    {% for note in notes_private %}
     <li>
-        <a href="{% url 'notes:show_note' uuid=note.uuid %}"
+        <a href="{% url 'notes:view_note' uuid=note.uuid %}"
             >{{ note.title }}</a
         >
     </li>
     {% empty %}
-    <li>There are no notes available</li>
+    <li>No private notes found</li>
+    {% endfor %}
+</ul>
+
+<h3>Public Notes</h3>
+<ul>
+    {% for note in notes_public %}
+    <li>
+        <a href="{% url 'notes:view_note' uuid=note.uuid %}"
+            >{{ note.title }}</a
+        >
+    </li>
+    {% empty %}
+    <li>No public notes found</li>
     {% endfor %}
 </ul>
 {% endif %}
