@@ -77,16 +77,23 @@ def search_note(request):
     form = NoteSearchForm(request.GET)
 
     q = ""
-    notes =  Note.objects.none()
+    notes_private = Note.objects.none()
+    notes_public = Note.objects.none()
+
     if form.is_valid():
         q = form.cleaned_data['q']
 
-        notes = Note.objects.filter(
-                (Q(owner=request.user) | Q(private=False)) &
-                Q(title__icontains=q)
-            ).distinct()
+        notes_private = Note.objects.filter(
+            owner=request.user,
+            title__icontains=q
+        )
 
-    context = {'form': form, 'notes': notes, 'query': q}
+        notes_public = Note.objects.filter(
+            private=False,
+            title__icontains=q
+        ).exclude(owner=request.user)
+
+    context = {'form': form, 'notes_private': notes_private, 'notes_public': notes_public, 'query': q}
 
     return render(request, 'notes/search_note.html', context)
 
