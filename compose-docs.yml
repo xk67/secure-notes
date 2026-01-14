@@ -4,3 +4,9 @@ services:
     container_name: secure_notes
     ports:
       - "8000:8000"
+
+  mkdocs:
+    build: ./docs
+    container_name: mkdocs
+    ports:
+      - "3000:3000"
