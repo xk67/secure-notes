@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block header %}
+{% include 'header.html' with title="Data Protection" %}
+{% endblock %}
+
+{% block main%}
+<h3>A. Name and address of the controller</h3>
+<p>The controller responsible for data processing is:</p>
+<p>Max Mustermann<br>
+Musterstraße 12<br>
+12345 Musterstadt, Germany<br>
+Phone: +49 123 456789<br>
+E-Mail: max.mustermann@secure-notes.de</p>
+
+<h3>B. Purposes and Legal Basis of Data Processing</h3>
+<p>
+We process personal data only for the purposes necessary to operate this web application.
+</p>
+<p>
+The main purposes are:
+</p>
+<ul>
+  <li>Managing user accounts and providing website functionality based on Article 6(1)(b) GDPR</li>
+  <li>Ensuring website security and technical operation based on Article 6(1)(f) GDPR</li>
+  <li>Loading third-party content (YouTube) after user consent based on Article 6(1)(a) GDPR</li>
+</ul>
+
+{% endblock %}
