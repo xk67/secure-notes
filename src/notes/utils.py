@@ -139,10 +139,7 @@ def markdown2html_safe(content: str):
 
     md = markdown.Markdown(extensions=[Yt2iframe()])
     html_unsafe = md.convert(content)
-    print(html_unsafe)
-    # set strip to true?
     html_safe = bleach.clean(html_unsafe, tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRIBUTES, protocols=ALLOWED_PROTOCOLS,strip=True)
-    print(html_safe)
 
     return html_safe
 
