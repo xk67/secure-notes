@@ -6,7 +6,7 @@ from markdown.extensions import Extension
 from markdown.inlinepatterns import InlineProcessor
 import xml.etree.ElementTree as etree
 
-ALLOWED_PROTOCOLS = {'http', 'https'}
+ALLOWED_PROTOCOLS = {'http', 'https', 'mailto'}
 
 ALLOWED_TAGS = [
     'p', 'hr', #'br'
