@@ -6,10 +6,10 @@ from markdown.extensions import Extension
 from markdown.inlinepatterns import InlineProcessor
 import xml.etree.ElementTree as etree
 
-ALLOWED_PROTOCOLS = {'http', 'https'}
+ALLOWED_PROTOCOLS = {'http', 'https', 'mailto'}
 
 ALLOWED_TAGS = [
-    'p', 'hr', #'br'
+    'p', 'hr', 'br',
     'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'blockquote',
     'ul', 'ol', 'li',
@@ -23,7 +23,7 @@ ALLOWED_TAGS = [
 
 ALLOWED_ATTRIBUTES = {
     'a': ['href', 'title'],
-    'img': ['src', 'alt'],
+    'img': ['src', 'alt', 'title'],
     'iframe': ['src', 'title', 'allow', 'referrerpolicy', 'frameborder'],
     'div': ['class']
 }
