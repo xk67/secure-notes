@@ -53,3 +53,12 @@ Python library for HTML sanitization
 - Actively maintained on [GitHub](https://github.com/mozilla/bleach) by the well known Mozilla team
 - Released under the Apache 2.0 License
 - Chosen for its easy to use integration and custom sanitization rules
+
+### Selenium
+
+A browser automation framework for testing
+
+- Version `4.39.0`
+- Actively maintained on [GitHub](https://github.com/SeleniumHQ/selenium) and well documented
+- Released under the Apache 2.0 License
+- Recommended by Django and easy integration in the Django test environment
