@@ -17,6 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.shortcuts import render, redirect
+from django.views.decorators.http import require_GET
+
+@require_GET
+def index(request):
+    if request.user.is_authenticated:
+        return redirect('notes:create_note')
+    return render(request, 'pages/index.html')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +32,5 @@ urlpatterns = [
     path("", include("users.urls")),
     path("imprint", TemplateView.as_view(template_name="pages/imprint.html"), name="imprint"),
     path("privacy", TemplateView.as_view(template_name="pages/privacy.html"), name="privacy"),
-    path("", TemplateView.as_view(template_name="pages/index.html"), name="index")
+    path("", index, name="index")
 ]
