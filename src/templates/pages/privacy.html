@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block header %}
+{% include 'header.html' with title="Data Protection" %}
+{% endblock %}
+
+{% block main%}
+<h3>A. Name and address of the controller</h3>
+<p>The controller responsible for data processing is:</p>
+<p>Max Mustermann<br>
+Musterstraße 12<br>
+12345 Musterstadt, Germany<br>
+Phone: +49 123 456789<br>
+E-Mail: max.mustermann@secure-notes.de</p>
+
+<h3>B. Purposes and Legal Basis of Data Processing</h3>
+<p>
+We process personal data only for the purposes necessary to operate this web application.
+</p>
+<p>
+The main purposes are:
+</p>
+<ul>
+  <li>Managing user accounts and providing website functionality based on Article 6(1)(b) GDPR</li>
+  <li>Ensuring website security and technical operation based on Article 6(1)(f) GDPR</li>
+  <li>Loading third-party content (YouTube) after user consent based on Article 6(1)(a) GDPR</li>
+</ul>
+
+<h3>C. Categories of Personal Data</h3>
+
+<p>The following categories of personal data are processed in this web application:</p>
+
+<ul>
+  <li>Account information: username, email address, password, date joined, and last login.</li>
+  <li>User-generated content: notes created by the user.</li>
+  <li>Technical data required for the operation of the website, such as session cookies and CSRF tokens.</li>
+  <li>API tokens for authentication with the site's own API, including the creation timestamp.</li>
+  <li>Third-party content data (YouTube videos), which is processed only after the user gives explicit consent.</li>
+  <li>Users can embed external images in their notes. Loading external images may transmit personal data such as IP addresses to third-party servers. The website does not control these external servers and is not responsible for their data processing.</li>
+</ul>
+
+<h3>D. Recipients or Categories of Recipients</h3>
+
+<p>
+The following recipients or categories of recipients may receive personal data:
+</p>
+
+<ul>
+  <li>
+    YouTube (Google Ireland Limited), if the user activates embedded videos by giving explicit consent.
+  </li>
+</ul>
+
+<h3>E. Storage Duration</h3>
+
+<p>
+Personal data is stored only for as long as necessary to provide the services of this web application.
+</p>
+
+<p>
+User accounts and all related data, including user-generated notes, are permanently deleted when the user deletes their account via the account settings.
+</p>
+
+<p>
+Users may also delete individual notes manually at any time.
+</p>
+
+<p>
+This application does not store activity logs and does not create backups of personal data.
+</p>
+
+<h3>F. Rights of the Data Subject</h3>
+
+<p>
+Under the General Data Protection Regulation (GDPR), users have the following rights regarding their personal data:
+</p>
+
+<ul>
+  <li>
+    <strong>Right of access (Art. 15 GDPR):</strong>
+    The right to obtain information about whether and how personal data is processed.
+  </li>
+  <li>
+    <strong>Right to rectification (Art. 16 GDPR):</strong>
+    The right to request the correction of inaccurate or incomplete personal data.
+  </li>
+  <li>
+    <strong>Right to erasure (Art. 17 GDPR):</strong>
+    The right to request the deletion of personal data. Users may delete their account and associated data directly via the account settings.
+  </li>
+  <li>
+    <strong>Right to restriction of processing (Art. 18 GDPR):</strong>
+    The right to request the restriction of the processing of personal data under certain conditions.
+  </li>
+  <li>
+    <strong>Right to data portability (Art. 20 GDPR):</strong>
+    The right to receive personal data in a structured, commonly used, and machine-readable format.
+  </li>
+  <li>
+    <strong>Right to object (Art. 21 GDPR):</strong>
+    The right to object to the processing of personal data where processing is based on legitimate interests.
+  </li>
+</ul>
+
+<p>
+Requests regarding these rights can be made by contacting the controller using the contact details provided above.
+</p>
+
+<h3>G. Right to Lodge a Complaint with a Supervisory Authority</h3>
+
+<p>
+Users have the right to lodge a complaint with a data protection supervisory authority if they believe that the processing of their personal data violates applicable data protection laws.
+</p>
+
+<p>
+In Germany, the competent supervisory authority for private-sector websites is the <strong>Hessian Data Protection and Freedom of Information Commissioner</strong>.
+Users can contact the authority via their website:
+<a href="https://datenschutz.hessen.de/kontakt">https://datenschutz.hessen.de/kontakt</a>.
+</p>
+
+<h3>H. International Data Transfers</h3>
+
+<p>
+Some personal data may be transferred to third countries outside the European Economic Area (EEA), for example when using embedded YouTube videos (Google Ireland Limited / Google LLC in the United States).
+</p>
+
+<p>
+Such transfers occur only after the user has given explicit consent. Google processes this data in compliance with EU data protection standards, using standard contractual clauses.
+</p>
+
+<p>
+Users should be aware that the level of data protection in third countries may differ from EU standards, and there may be some risks associated with such transfers.
+</p>
+
+{% endblock %}

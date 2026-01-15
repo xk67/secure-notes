@@ -34,8 +34,16 @@
         a.imprint:visited {
             color: inherit;
         }
+        a.privacy {
+                    text-decoration: none;
+                }
+        a.privacy:visited {
+            color: inherit;
+        }
         </style>
         <a class="imprint" href="{% url 'imprint' %}" style="color: black;  ">Imprint</a>
+        <span>|</span>
+        <a class="privacy" href="{% url 'privacy' %}" style="color: black;  ">Data protection</a>
     </footer>
 </body>
 </html>

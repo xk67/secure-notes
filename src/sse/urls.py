@@ -23,5 +23,6 @@ urlpatterns = [
     path("", include("notes.urls")),
     path("", include("users.urls")),
     path("imprint", TemplateView.as_view(template_name="pages/imprint.html"), name="imprint"),
+    path("privacy", TemplateView.as_view(template_name="pages/privacy.html"), name="privacy"),
     path("", TemplateView.as_view(template_name="pages/index.html"), name="index")
 ]
