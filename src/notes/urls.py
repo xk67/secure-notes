@@ -1,6 +1,6 @@
 from django.urls import path
-from rest_framework.authtoken.views import obtain_auth_token
 from .views import api, web
+from .views.api import APILoginView
 
 app_name = "notes"
 
@@ -11,7 +11,7 @@ urlpatterns = [
     path("api/notes", api.list_notes),
     path('api/note/create', api.create_note),
     path("api/note/<uuid>", api.get_note),
-    path('api/token', obtain_auth_token, name="api_get_token"),
+    path('api/token', APILoginView.as_view(), name="api_get_token"),
     path('note/search', web.search_note, name="search_note"),
     path('note/preview', web.preview_note, name="preview_note")
 ]

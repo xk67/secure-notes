@@ -1,12 +1,26 @@
 from notes.serializers import NoteSerializer, NoteContentSerializer, NoteCreateSerializer
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
+from knox.auth import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework import status
 from notes.models import Note
 from django.http import  Http404
 from uuid import UUID
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from knox.views import LoginView as KnoxLoginView
+from django.contrib.auth import login
+from rest_framework import permissions
+
+class APILoginView(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(APILoginView, self).post(request, format=None)
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
