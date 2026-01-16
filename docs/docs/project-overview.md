@@ -71,3 +71,15 @@ A package providing cryptographic recipes and primitives for Python
 - Actively maintained on [GitHub](https://github.com/pyca/cryptography) and well documented
 - Released under the Apache 2.0 License
 - Chosen for its security and easy integration in Python applications
+
+### Django REST Knox
+
+A token-based authentication system for Django REST Framework
+
+- Not currently actively maintained, see [GitHub](https://github.com/James1345/django-rest-knox)
+- Why this is not an issue for this project:
+    - There are no dependencies that need frequent updates
+    - The library’s core functionality is stable and does not require frequent updates
+    - No relevant security issues or open pull requests affecting this project
+- Released under the MIT License
+- Chosen because the tokens are encrypted in the database and it offers easy integration with Django REST Framework
