@@ -43,7 +43,7 @@ Framework for building APIs in Django
 - Version `3.16.1`
 - Actively maintained on [GitHub](https://github.com/encode/django-rest-framework) and well documented
 - Released under the BSD 3-Clause License
-- Chosen for its seamless integration with the Django ecosystem and its built-in token authentication
+- Chosen for its seamless integration with the Django ecosystem and ease of building API endpoints
 
 ### Bleach
 
