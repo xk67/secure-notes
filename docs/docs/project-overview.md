@@ -5,6 +5,11 @@ Nils Breuer
 
 ## Used Technologies
 
+- I used [Snyk Advisor](https://snyk.io/advisor) and [Is It Maintained?](https://isitmaintained.com) for an initial evaluation,  
+checked the GitHub pages to verify maintenance and looked online for any reported security issues
+- If a package is no longer actively maintained, I have explained in its respective section why this is not an issue
+- The versions of all packages currently used in this project have no known active security vulnerabilities
+
 ### Django
 
 The main framework for the backend and frontend
@@ -78,7 +83,6 @@ A token-based authentication system for Django REST Framework
 
 - Not currently actively maintained, see [GitHub](https://github.com/James1345/django-rest-knox)
 - Why this is not an issue for this project:
-    - There are no dependencies that need frequent updates
     - The library’s core functionality is stable and does not require frequent updates
     - No relevant security issues or open pull requests affecting this project
 - Released under the MIT License
