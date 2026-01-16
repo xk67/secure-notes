@@ -9,6 +9,7 @@ Development Infrastructure and Workflow
 **Github Actions**
 
 - Project security analysis with Snyk
+- Code quality analysis with CodeRabbit
 - Frontend testing with Selenium
 - Backend testing with the Django test framework
 - Build the application as a Docker image and publish it to the GitHub Container Registry on pushes to main or on releases
