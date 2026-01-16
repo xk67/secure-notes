@@ -62,3 +62,12 @@ A browser automation framework for testing
 - Actively maintained on [GitHub](https://github.com/SeleniumHQ/selenium) and well documented
 - Released under the Apache 2.0 License
 - Recommended by Django and easy integration in the Django test environment
+
+### Cryptography
+
+A package providing cryptographic recipes and primitives for Python
+
+- Version `46.0.3`
+- Actively maintained on [GitHub](https://github.com/pyca/cryptography) and well documented
+- Released under the Apache 2.0 License
+- Chosen for its security and easy integration in Python applications
