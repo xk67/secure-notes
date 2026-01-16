@@ -5,6 +5,11 @@ Nils Breuer
 
 ## Used Technologies
 
+- I used [Snyk Advisor](https://snyk.io/advisor) and [Is It Maintained?](https://isitmaintained.com) for an initial evaluation,  
+checked the GitHub pages to verify maintenance and looked online for any reported security issues
+- If a package is no longer actively maintained, I have explained in its respective section why this is not an issue
+- The versions of all packages currently used in this project have no known active security vulnerabilities
+
 ### Django
 
 The main framework for the backend and frontend
@@ -43,7 +48,7 @@ Framework for building APIs in Django
 - Version `3.16.1`
 - Actively maintained on [GitHub](https://github.com/encode/django-rest-framework) and well documented
 - Released under the BSD 3-Clause License
-- Chosen for its seamless integration with the Django ecosystem and its built-in token authentication
+- Chosen for its seamless integration with the Django ecosystem and ease of building API endpoints
 
 ### Bleach
 
@@ -53,3 +58,32 @@ Python library for HTML sanitization
 - Actively maintained on [GitHub](https://github.com/mozilla/bleach) by the well known Mozilla team
 - Released under the Apache 2.0 License
 - Chosen for its easy to use integration and custom sanitization rules
+
+### Selenium
+
+A browser automation framework for testing
+
+- Version `4.39.0`
+- Actively maintained on [GitHub](https://github.com/SeleniumHQ/selenium) and well documented
+- Released under the Apache 2.0 License
+- Recommended by Django and easy integration in the Django test environment
+
+### Cryptography
+
+A package providing cryptographic recipes and primitives for Python
+
+- Version `46.0.3`
+- Actively maintained on [GitHub](https://github.com/pyca/cryptography) and well documented
+- Released under the Apache 2.0 License
+- Chosen for its security and easy integration in Python applications
+
+### Django REST Knox
+
+A token-based authentication system for Django REST Framework
+
+- Not currently actively maintained, see [GitHub](https://github.com/James1345/django-rest-knox)
+- Why this is not an issue for this project:
+    - The library’s core functionality is stable and does not require frequent updates
+    - No relevant security issues or open pull requests affecting this project
+- Released under the MIT License
+- Chosen because the tokens are encrypted in the database and it offers easy integration with Django REST Framework
