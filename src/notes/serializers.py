@@ -4,8 +4,6 @@ from .utils import markdown2html_safe, sanitize_title
 
 class NoteSerializer(serializers.ModelSerializer):
 
-    owner = serializers.ReadOnlyField(source='owner.username')
-
     class Meta:
         model = Note
         fields = ["title", "content", "uuid"]
