@@ -18,7 +18,11 @@ ALLOWED_TAGS = [
     'em', 'strong',
     'img', 'iframe',
     # Consent wrapper elements
-    'div', 'button', 'template'
+    'div', 'button', 'template',
+    'section', 'header', 'article', 'footer',
+    'span', 'mark', 'del', 'ins', 'sub', 'sup', 'small',
+    'table', 'caption', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td',
+    'figure', 'figcaption'
 ]
 
 def iframe_attribute_filter(tag, name, value):
