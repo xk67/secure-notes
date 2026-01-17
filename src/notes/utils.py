@@ -120,7 +120,7 @@ class EmbedInlineProcessor(InlineProcessor):
         iframe.set("src", embed_url)
         iframe.set("referrerpolicy", "strict-origin-when-cross-origin")
         iframe.set("frameborder", "0")
-        # iframe.set("allowfullscreen", "true")
+        iframe.set("allowfullscreen", "true")
 
         if title:
             iframe.set("title", title)
