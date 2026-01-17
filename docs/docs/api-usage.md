@@ -8,13 +8,13 @@
 - Requires a verified account
 
 ```bash
-$ curl -X POST http://localhost:8000/api/token \
+curl -X POST http://localhost:8000/api/token \
 -H "Content-Type: application/json" \
 -d '{"username": "admin", "password" :"admin"}'
 ```
 
 ```bash
-$ curl -X POST http://localhost:8000/api/token -d 'username=admin&password=admin'
+curl -X POST http://localhost:8000/api/token -d 'username=admin&password=admin'
 ```
 
 ## `/api/notes`
@@ -23,7 +23,7 @@ $ curl -X POST http://localhost:8000/api/token -d 'username=admin&password=admin
 - Requires a personal access token
 
 ```bash
-$ curl -X GET http://localhost:8000/api/notes -H 'Authorization: Token <TOKEN>'
+curl -X GET http://localhost:8000/api/notes -H 'Authorization: Token <TOKEN>'
 ```
 
 ## `/api/note/create`
@@ -33,14 +33,14 @@ $ curl -X GET http://localhost:8000/api/notes -H 'Authorization: Token <TOKEN>'
 - JSON keys `title` and `content` are required (`private` defaults to `on`)
 
 ```bash
-$ curl -X POST http://localhost:8000/api/note/create \
+curl -X POST http://localhost:8000/api/note/create \
 -H "Authorization: Token <TOKEN>" \
 -H "Content-Type: application/json" \
 -d '{"title":"test", "content":"# test", "private":"off"}'
 ```
 
 ```bash
-$ curl -X POST http://localhost:8000/api/note/create \
+curl -X POST http://localhost:8000/api/note/create \
 -H "Authorization: Token <TOKEN>" \
 -d 'title=test&content=# test&private=off'
 ```
@@ -51,5 +51,5 @@ $ curl -X POST http://localhost:8000/api/note/create \
 - Requires a personal access token
 
 ```bash
-$ curl -X GET http://localhost:8000/api/note/<UUID> -H "Authorization: Token <TOKEN>"
+curl -X GET http://localhost:8000/api/note/<UUID> -H "Authorization: Token <TOKEN>"
 ```
