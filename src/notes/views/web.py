@@ -67,6 +67,7 @@ def view_note(request, uuid):
     context = {
         "note_title": note.title,
         "note_content": mark_safe(note.content),
+        "note_owner": note.owner.username,
         "form": form,
         "is_owner": note.owner == request.user
     }
