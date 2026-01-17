@@ -110,12 +110,36 @@ Escaped characters:
 ---
 
 <div>
-  <strong>HTML inside Markdown</strong>
+  <strong>Demo: Section with Articles, Tables, and Semantic HTML</strong>
 </div>
 
-<p>This paragraph is written in HTML.</p>
+<section>
+  <header><h1>This is a section with an article</h1></header>
 
-This is <em>inline HTML</em> inside a paragraph.
+  <article>
+    <p>
+      <span>Text</span>,
+      <mark>marked</mark>,
+      <del>deleted</del>,
+      <ins>inserted</ins>,
+      H<sub>2</sub>O · x<sup>2</sup>,
+      <small>small text</small>
+    </p>
+  </article>
+
+  <table>
+    <caption>Table Demo</caption>
+    <thead><tr><th>Header</th></tr></thead>
+    <tbody><tr><td>Data</td></tr></tbody>
+    <tfoot><tr><td>Footer</td></tr></tfoot>
+  </table>
+
+  <figure>
+    <figcaption>Figure Caption</figcaption>
+  </figure>
+
+  <footer>End of Section</footer>
+</section>
 
 ---
 
