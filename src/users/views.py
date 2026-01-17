@@ -56,7 +56,7 @@ def signup(request):
             messages.success(request, 'Account created successfully! Please check your emails to verify your account.')
             return redirect('users:signup')
     else:
-        form = SignUpForm
+        form = SignUpForm()
 
     return render(request, 'users/signup.html', {'form': form})
 
