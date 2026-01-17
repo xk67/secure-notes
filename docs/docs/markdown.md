@@ -135,3 +135,16 @@ Greater than: &gt;
 ![www.youtube.com](embed:https://www.youtube.com/watch?v=aHTCawFKkkw)
 
 ```
+
+## Social Plugin
+
+Embed YouTube videos via Markdown syntax
+
+- **Syntax:** `![<Optional Title>](embed:<Link>)`
+- Supported link formats:
+    - `youtu.be/video_id`
+    - `www.youtu.be/video_id`
+    - `youtube.com/watch?v=video_id`
+    - `www.youtube.com/watch?v=video_id`
+- YouTube videos are embedded via an iframe, converted to `www.youtube-nocookie.com/embed/video_id`
+- Users are asked for consent before the iframe loads
