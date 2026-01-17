@@ -3,10 +3,14 @@ from .models import Note
 from .utils import markdown2html_safe, sanitize_title
 
 class NoteSerializer(serializers.ModelSerializer):
+    owner = serializers.SerializerMethodField()
 
     class Meta:
         model = Note
-        fields = ["title", "content", "uuid"]
+        fields = ["title", "content", "uuid", "owner"]
+
+    def get_owner(self, obj):
+        return obj.owner.username
 
 class NoteContentSerializer(serializers.ModelSerializer):
     class Meta:
