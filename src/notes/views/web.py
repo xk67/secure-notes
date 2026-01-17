@@ -60,7 +60,7 @@ def view_note(request, uuid):
         form = NoteDeleteForm(request.POST)
         if form.is_valid():
             note.delete()
-            return redirect("notes:create_notes")
+            return redirect("notes:create_note")
     else:
         form = NoteDeleteForm()
 
