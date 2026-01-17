@@ -8,9 +8,10 @@ from django.db.models import Q
 from django.core.exceptions import ValidationError
 from notes.utils import markdown2html_safe, sanitize_title
 from django.utils.safestring import mark_safe
-from django.views.decorators.http import require_POST, require_GET
+from django.views.decorators.http import require_POST, require_GET, require_http_methods
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def create_note(request):
     note_url = None
     if request.method == "POST":
@@ -29,6 +30,7 @@ def create_note(request):
     return render(request, "notes/create_note.html", {"form": form, "note_url": note_url})
 
 @login_required
+@require_GET
 def list_notes(request):
 
     user = request.user
@@ -43,6 +45,7 @@ def list_notes(request):
     return render(request, "notes/list_notes.html", context)
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def view_note(request, uuid):
 
     try:
@@ -57,7 +60,7 @@ def view_note(request, uuid):
         form = NoteDeleteForm(request.POST)
         if form.is_valid():
             note.delete()
-            return redirect("notes:list_notes")
+            return redirect("notes:create_notes")
     else:
         form = NoteDeleteForm()
 
