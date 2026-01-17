@@ -1,6 +1,6 @@
 <header style="background-color: #f0f0f0; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px;">
     <div>
-        <h2 style="margin: 0px;">{{ title }}</h2>
+        <h2 style="margin: 0px;">{{ title }}</h2>{% if subtitle %} <sub>by {{ subtitle }}</sub>{% endif %}
     </div>
     {% if user.is_authenticated %}
     <div style="display: flex; align-items: center; gap: 15px;">
