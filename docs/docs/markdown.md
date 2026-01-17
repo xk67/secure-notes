@@ -1,4 +1,6 @@
-# Supported Markdown
+# Markdown Features
+
+The following code block shows all the Markdown features implemented by this app
 
 ```markdown
 # H1
