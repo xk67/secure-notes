@@ -74,7 +74,7 @@ Data validation is handled by Django’s built-in validators:
   - **Vulnerability**: Unsanitized form input could lead to XSS or SQL injection.
   - **Mitigation**: Django forms automatically sanitize input and use parameterized queries through the ORM, preventing these attacks.
 
-## Data Protection
+### Data Protection
 
 During user registration, the following data is stored*:
 
@@ -83,5 +83,37 @@ During user registration, the following data is stored*:
 - Password (hashed)  
 - Date joined  
 - Last login  
+
+## Note Search
+
+The note search functionality is implemented via a custom `search_note` view that uses a custom form based on [Form](https://github.com/django/django/blob/stable/5.2.x/django/forms/forms.py#L432) class.
+
+- An HTTP GET request is sent to `/search` with the query string parameter `q` as the search term
+- The query string is used to search for notes whose title contains the provided search term
+- The response consists of links to:
+    - notes owned by the currently authenticated user and
+    - public notes belonging to other users
+- The query string is rendered on the result page as: `Results for: <q>`
+- If no query string is provided or if the query length exceeds 32 characters an error message is shown to the user
+
+### Potential Vulnerabilities and Mitigations
+
+**Cross-Site Scripting (XSS)**
+
+- **Potential vulnerability**:  
+  The search query is reflected on the result page, which could theoretically be abused for XSS attacks if malicious input is provided.
+- **Mitigation**:  
+  Django’s template system automatically escapes user-supplied data by default, ensuring that special characters are rendered safely.
+
+**SQL Injection**
+
+- **Potential vulnerability**:  
+  The query string is used to filter note titles in the database, which could raise concerns about SQL injection.
+- **Mitigation**:  
+  Django’s ORM protects against SQL injection by using query parameterization. SQL code and user-supplied parameters are handled separately and parameters are safely escaped.
+
+### Data Protection
+
+During the note search process no search queries or results are stored*.
 
 \* For more information on data processing and user rights, refer to the Secure Notes data protection page.
