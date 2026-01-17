@@ -13,6 +13,7 @@ from django.conf import settings
 import hashlib
 import base64
 from django.contrib import messages
+from django.views.decorators.http import require_GET, require_http_methods
 
 User = get_user_model()
 
@@ -21,6 +22,7 @@ bytes = hashlib.sha256(settings.SECRET_KEY.encode()).digest()
 key = base64.urlsafe_b64encode(bytes)
 fernet = Fernet(key)
 
+@require_http_methods(["GET", "POST"])
 def signup(request):
 
     if request.user.is_authenticated:
@@ -56,10 +58,11 @@ def signup(request):
             messages.success(request, 'Account created successfully! Please check your emails to verify your account.')
             return redirect('users:signup')
     else:
-        form = SignUpForm
+        form = SignUpForm()
 
     return render(request, 'users/signup.html', {'form': form})
 
+@require_GET
 def verify(request, token):
 
     # Use a try block because handle user input, base64 decoding or missing users can cause errors
@@ -77,10 +80,12 @@ def verify(request, token):
         raise Http404()
 
 @login_required
+@require_GET
 def profile(request):
     return render(request, 'users/profile.html')
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def delete(request):
     if request.method == "POST":
         form = DeleteForm(request.POST)
