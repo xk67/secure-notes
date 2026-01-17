@@ -21,10 +21,15 @@ ALLOWED_TAGS = [
     'div', 'button', 'template'
 ]
 
+def iframe_attribute_filter(tag, name, value):
+    if name == 'src':
+        return value.startswith('https://www.youtube-nocookie.com/embed/')
+    return name in ['title', 'referrerpolicy', 'frameborder', 'allowfullscreen']
+
 ALLOWED_ATTRIBUTES = {
     'a': ['href', 'title'],
     'img': ['src', 'alt', 'title'],
-    'iframe': ['src', 'title', 'allow', 'referrerpolicy', 'frameborder'],
+    'iframe': iframe_attribute_filter,
     'div': ['class']
 }
 
