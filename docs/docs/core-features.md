@@ -201,18 +201,32 @@ Users have the right to delete their notes at any time*.
 ## List Notes
 
 ### Technical Implementation
-Note creation is handled via a custom
-[`create_note`](https://github.com/xk67/secure-notes/blob/main/src/notes/views/web.py#L15)
-view that uses a custom form based on  [ModelForm](https://docs.djangoproject.com/en/stable/topics/forms/modelforms/).
+List notes is handled via a custom
+[list_notes](https://github.com/xk67/secure-notes/blob/main/src/notes/views/web.py#L34)
+view.
 
-An HTTP **POST** request is sent to `/notes/create` with the following
-`application/x-www-form-urlencoded` fields:
+An simple HTTP **GET** request is sent to `/notes` and returns notes owned by the current user or other public notes.
 
-  - `csrfmiddlewaretoken`
-  - `title`
-  - `content`
-  - `private`
+**Broken Access Control**
 
+If access control checks are missing or incorrect, users could see
+notes they do not own, including private notes of other users.
+
+Mitigation: Use the ORM `filter()` function to return only public notes
+and `user.notes.all()` to include all notes owned by the authenticated user.
+
+**Cross-Site Scripting (XSS)**
+
+The note title is reflected on the page, which could theoretically
+be abused if malicious note title was set.
+
+Mitigation: Use Django’s template system to automatically escape variables,
+ensuring special characters are rendered safely. Note titles are also
+sanitized at creation.
+
+### Data Protection
+
+During the list note process nothing is stored*.
 
 
 \* For more information on data processing and user rights, refer to the Secure Notes data protection page.
