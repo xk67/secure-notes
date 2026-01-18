@@ -207,6 +207,8 @@ view.
 
 An simple HTTP **GET** request is sent to `/notes` and returns notes owned by the current user or other public notes.
 
+### Potential Vulnerabilities and Mitigations
+
 **Broken Access Control**
 
 If access control checks are missing or incorrect, users could see
