@@ -238,6 +238,36 @@ verifies the user’s password before performing deletion.
 After account deletion, all personal data associated with the account,
 including notes, is permanently deleted*.
 
+## User Profile
+
+### Technical Implementation
+
+The user profile is rendered via a custom [profile](https://github.com/xk67/secure-notes/blob/main/src/users/views.py#L84) view.
+
+An HTTP **GET** request is sent to `/profile`.
+
+The profile page displays the following user-related data:
+
+- `username`
+- `email`
+- link to password reset
+- link to account deletion
+
+### Potential Vulnerabilities and Mitigations
+
+**Cross-Site Scripting (XSS)**
+
+The `username` and `email` address are rendered in the template and originate
+from user-controlled input.
+
+Mitigation: Django’s template system automatically escapes all variables
+by default, ensuring that special characters are rendered safely and
+preventing XSS attacks.
+
+### Data Protection
+
+During the profile view process, no data is stored*.
+
 ## Note Search
 
 The note search functionality is implemented via a custom `search_note` view that uses a custom form based on [Form](https://github.com/django/django/blob/stable/5.2.x/django/forms/forms.py#L432) class.
