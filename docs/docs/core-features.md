@@ -68,6 +68,18 @@ converted to safe HTML entities, preventing malicious scripts from executing.
 For more details, see the Django documentation on XSS protection:  
 [Cross-Site Scripting (XSS) Protection](https://docs.djangoproject.com/en/5.2/topics/security/#cross-site-scripting-xss-protection)
 
+### SQL Injection Protection
+
+Django’s ORM (Object-Relational Mapper) protects against SQL injection by
+using parameterized queries for all database operations.
+
+User-supplied input is never directly concatenated into SQL statements.
+Instead, the ORM safely escapes parameters and constructs queries, ensuring
+that malicious input cannot alter the intended SQL logic.
+
+For more details, see the Django documentation on SQL injection protection:  
+[SQL Injection Protection](https://docs.djangoproject.com/en/5.2/topics/security/#sql-injection-protection)
+
 
 ## User Registration
 
