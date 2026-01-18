@@ -230,5 +230,47 @@ sanitized at creation.
 
 During the list note process nothing is stored*.
 
+## Social Plugin
+
+### Technical Implementation
+
+The Social Plugin is implemented as a Markdown extension: [Yt2iframe](https://github.com/xk67/secure-notes/blob/main/src/notes/utils.py#L139).
+
+A regex, [EMBED_RE](https://github.com/xk67/secure-notes/blob/main/src/notes/utils.py#L40), is registered and looks for the following pattern during Markdown conversion: `![<optional title>](embed:<YouTube link>)`
+
+The following YouTube link formats are allowed:
+
+- `https://youtu.be/<video_id>`
+- `https://www.youtu.be/<video_id>`
+- `https://youtube.com/watch?v=<video_id>`
+- `https://www.youtube.com/watch?v=<video_id>`
+
+`http` is also accepted.
+
+If a valid link is provided, it is converted to `https://www.youtube-nocookie.com/embed/<video_id>`.
+
+Then an `<iframe>` is generated (see attributes [here](https://github.com/xk67/secure-notes/blob/main/src/notes/utils.py#L93)) and wrapped in a template that renders a consent banner.
+
+Accepting the consent banner and loading the iframe is handled by the [embed-consent](https://github.com/xk67/secure-notes/blob/main/src/static/js/embed-consent.js) script.
+
+The consent banner is created on the backend to keep the frontend implementation simple. As a result, API consumers who render note content themselves must implement a compatible consent mechanism client-side.
+
+### Potential Vulnerabilities and Mitigations
+
+**Clickjacking**
+
+If an attacker can cause an iframe to load an arbitrary origin the embedded page may be used for phishing.
+
+Mitigation: The plugin only accepts specific YouTube URL patterns and rewrites them to the fixed host `www.youtube-nocookie.com` with a strict `/embed/<video_id>` path. Any non-matching URLs are rejected and are not converted into iframes.
+
+**Permission Scope**
+
+If the iframe is granted broad capabilities it can increase the attack surface and privacy impact.
+
+Mitigation: Keep iframe attributes restrictive. Limit capabilities via the `allow` attribute.
+
+### Data Protection
+
+No data is stored during iframe generation itself. To avoid automatically loading YouTube content (and thereby preventing immediate data transfer to YouTube/Google), a consent banner is implemented. The video is only loaded if a user explicitly accepts it*.
 
 \* For more information on data processing and user rights, refer to the Secure Notes data protection page.
