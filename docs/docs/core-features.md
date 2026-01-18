@@ -30,6 +30,20 @@ those endpoints.
 For more information, see the Django sessions documentation
 [here](https://docs.djangoproject.com/en/5.2/topics/http/sessions/).
 
+### CSRF Protection
+
+CSRF protection is handled via Django and can be activated by adding:
+
+- `django.middleware.csrf.CsrfViewMiddleware` to `MIDDLEWARE`.
+
+On every POST request, a hidden token named `csrfmiddlewaretoken` is sent
+to verify the request.
+
+A detailed description is available in the Django documentation:
+
+- How it works: https://docs.djangoproject.com/en/5.2/ref/csrf/#how-it-works
+- How to use it: https://docs.djangoproject.com/en/6.0/howto/csrf/
+
 ## User Registration
 
 ### Technical Implementation
