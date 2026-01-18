@@ -172,3 +172,12 @@ Embed YouTube videos via Markdown syntax
     - `https://www.youtube.com/watch?v=video_id`
 - YouTube videos are embedded via an iframe, converted to `www.youtube-nocookie.com/embed/video_id`
 - Users are asked for consent before the iframe loads
+
+## Image Privacy Concerns
+
+In the current implementation of images, privacy concerns exist because images are not filtered and are loaded instantly, which can potentially leak the user's IP address.
+
+**Mitigation:**
+
+- Display a **content banner** before loading external images.
+- Alternatively, use an **image proxy** to serve images through the server, preventing direct requests to external sources.
