@@ -44,6 +44,19 @@ A detailed description is available in the Django documentation:
 - How it works: https://docs.djangoproject.com/en/5.2/ref/csrf/#how-it-works
 - How to use it: https://docs.djangoproject.com/en/6.0/howto/csrf/
 
+### Authorization
+
+Authorization in Django is enabled by adding
+`django.contrib.auth.middleware.AuthenticationMiddleware` to the `MIDDLEWARE`
+list.
+
+This middleware allows each view to access `request.user`, which represents
+the authenticated user making the request. Using `request.user`, the
+application can enforce access control, for example:
+
+- Checking ownership of resources: `note.owner == request.user`
+- Filtering querysets to include only authorized objects: `Note.objects.filter(owner=request.user)`
+
 ## User Registration
 
 ### Technical Implementation
