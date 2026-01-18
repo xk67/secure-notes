@@ -80,6 +80,10 @@ that malicious input cannot alter the intended SQL logic.
 For more details, see the Django documentation on SQL injection protection:  
 [SQL Injection Protection](https://docs.djangoproject.com/en/5.2/topics/security/#sql-injection-protection)
 
+### Additional Security Measures
+
+Django provides many other built-in security protections see:
+[Django Security Guide](https://docs.djangoproject.com/en/5.2/topics/security/)
 
 ## User Registration
 
