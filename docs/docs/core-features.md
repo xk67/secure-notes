@@ -311,9 +311,7 @@ The note search functionality is implemented via a custom `search_note` view tha
 If access control checks are missing or incorrect, users could see
 notes they do not own, including private notes of other users.
 
-Mitigation: Use the ORM `filter()` function to ensure only public notes
-are returned and `user.notes.all()` to include all notes owned by the
-authenticated user.
+Mitigation: Use the ORM `filter()` function to ensure that only notes belonging to the authenticated user are returned.
 
 **Cross-Site Scripting (XSS)**
 
