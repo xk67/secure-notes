@@ -1,2 +1,9 @@
 site_name: My Docs
 theme: readthedocs
+
+nav:
+  - Project Overview: index.md
+  - Core Feature: core-features.md
+  - Markdown Features: markdown.md
+  - API Usage: api-usage.md
+  - Development: development.md

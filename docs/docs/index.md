@@ -1,5 +1,13 @@
 # Project Overview
 
+Secure Notes is a simple note taking app with following feature:
+
+- takes notes in markdown view in html
+- signup with verified email
+- safe notes private or public
+- search for private or public notes
+- 
+
 ## Team Members
 Nils Breuer
 
