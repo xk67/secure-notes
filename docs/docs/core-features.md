@@ -149,7 +149,7 @@ Data validation is handled by Django’s built-in validators:
   - [validate_password](https://github.com/django/django/blob/main/django/contrib/auth/password_validation.py#L41) validates the password using the validators set in `AUTH_PASSWORD_VALIDATORS`:
     
     - `UserAttributeSimilarityValidator` checks similarity between the password and a set of user attributes
-    - `MinimumLengthValidator` checks whether the password meets a minimum length
+    - `MinimumLengthValidator` checks whether the password meets a minimum length of 15.
     - `CommonPasswordValidator` checks whether the password occurs in a list of common passwords (default list includes 20,000 passwords from [roycewilliams](https://gist.github.com/roycewilliams/226886fd01572964e1431ac8afc999ce))
     - `NumericPasswordValidator` checks whether the password is not entirely numeric
     - The implementation of the validators can be found [here](https://github.com/django/django/blob/stable/5.2.x/django/contrib/auth/password_validation.py)
@@ -163,36 +163,39 @@ Data validation is handled by Django’s built-in validators:
   - The password is stored as `<algorithm>$<iterations>$<salt>$<hash>` in the database
   - For more information on how Django handles passwords, see [Password Management in Django](https://docs.djangoproject.com/en/6.0/topics/auth/passwords/#password-management-in-django)
 
+After registration, a verification email is sent to the provided email address.
+The email contains a unique verification link. Only after the user clicks this
+link is the account activated (`is_active = true`) and login becomes possible.
+This ensures that the email address is owned by the registering user.
+
 ### Potential Vulnerabilities and Mitigations
 
 **Username or Email Enumeration**
 
-  - **Vulnerability**: An attacker could try to discover which usernames or email addresses are registered by observing error messages during registration.
-  - **Mitigation**: Implemented a uniform error message: `"A user with the given email address or username already exists"` for both username and email conflicts, preventing enumeration.
+An attacker could try to discover which usernames or email addresses are registered by observing error messages during registration.
 
-**Weak Passwords**
+Mitigation: Implemented a uniform error message: `"A user with the given email address or username already exists"` for both username and email conflicts, preventing enumeration.
 
-  - **Vulnerability**: Users may choose passwords that are easy to guess or are included in common password lists
-  - **Mitigation**: Enforced password validation using Django's validators:
-    - Minimum length (default: 8 characters)
-    - Not entirely numeric
-    - Not included in the common passwords list
-    - Not too similar to user attributes
+**Brute Force Attacks**
 
-**Cross-Site Request Forgery (CSRF)**
+Attackers could attempt to guess user passwords by trying many combinations.
 
-  - **Vulnerability**: Malicious sites could submit forms on behalf of a user
-  - **Mitigation**: Django's CSRF middleware automatically protects the signup form
+Mitigation: Users are required to set strong passwords during registration.
 
-**Password Storage**
+**Data Breach**
 
-  - **Vulnerability**: Passwords stored in plaintext or using weak hashing could be exposed if the database is compromised
-  - **Mitigation**: Django stores passwords securely using PBKDF2 with SHA256, unique per-user salt, and 1,000,000 iterations
+Passwords stored in plaintext or using weak hashing could be exposed if the database is compromised.
 
-**Input Sanitization / Injection**
+Mitigation: Django stores passwords securely using PBKDF2 with SHA256, unique per-user salt, and 1,000,000 iterations.
 
-  - **Vulnerability**: Unsanitized form input could lead to XSS or SQL injection.
-  - **Mitigation**: Django forms automatically sanitize input and use parameterized queries through the ORM, preventing these attacks.
+**SQL Injection**
+
+The query string is used to filter note titles in the database, which could
+raise concerns about SQL injection.
+
+Mitigation: Use Django’s ORM and query parameterization to ensure that
+SQL code and user-supplied parameters are handled separately and safely
+escaped.
 
 ### Data Protection
 
