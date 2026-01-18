@@ -109,17 +109,20 @@ authenticated user.
 
 **Cross-Site Scripting (XSS)**
 
-- **Potential vulnerability**:  
-  The search query is reflected on the result page, which could theoretically be abused for XSS attacks if malicious input is provided.
-- **Mitigation**:  
-  Django’s template system automatically escapes user-supplied data by default, ensuring that special characters are rendered safely.
+The search query is reflected on the result page, which could theoretically
+be abused if malicious input is provided.
+
+Mitigation: Django’s template system automatically escapes user-supplied
+data by default, ensuring special characters are rendered safely.
 
 **SQL Injection**
 
-- **Potential vulnerability**:  
-  The query string is used to filter note titles in the database, which could raise concerns about SQL injection.
-- **Mitigation**:  
-  Django’s ORM protects against SQL injection by using query parameterization. SQL code and user-supplied parameters are handled separately and parameters are safely escaped.
+The query string is used to filter note titles in the database, which could
+raise concerns about SQL injection.
+
+Mitigation: Use Django’s ORM and query parameterization to ensure that
+SQL code and user-supplied parameters are handled separately and safely
+escaped.
 
 ### Data Protection
 
