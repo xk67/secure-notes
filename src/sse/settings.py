@@ -14,6 +14,7 @@ SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_PORT = env.int("EMAIL_PORT")
+TIME_ZONE = env("TIME_ZONE")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -91,7 +92,7 @@ STATICFILES_DIRS = [
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+
 
 USE_I18N = True
 
