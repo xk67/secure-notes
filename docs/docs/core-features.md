@@ -85,6 +85,41 @@ For more details, see the Django documentation on SQL injection protection:
 Django provides many other built-in security protections see:
 [Django Security Guide](https://docs.djangoproject.com/en/5.2/topics/security/)
 
+## User Login
+
+### Technical Implementation
+
+User login is completely handled by Django’s
+[LoginView](https://github.com/django/django/blob/stable/5.2.x/django/contrib/auth/views.py#L66) view.
+
+An HTTP **POST** request is sent to `/login` with the following
+`application/x-www-form-urlencoded` fields:
+
+- `csrfmiddlewaretoken`
+- `username`
+- `password`
+
+The built-in [AuthenticationForm](https://github.com/django/django/blob/stable/5.2.x/django/contrib/auth/forms.py#L335) uses the same error message for wrong usernames and passwords.
+
+### Potential Vulnerabilities and Mitigations
+
+**Username Enumeration**  
+
+An attacker could try to discover which usernames exist based on login error messages.
+
+Mitigation: Use the same login error message for both non-existent usernames and incorrect passwords.
+
+**SQL Injection**  
+
+The `username` and `password` are used to query the database, which could raise concerns about SQL injection.
+
+Mitigation: Use Django’s ORM and query parameterization to ensure that SQL code and user-supplied parameters are handled separately and safely escaped.
+ 
+### Data Protection
+
+After a successful login, session get stored and last login*.
+
+
 ## User Registration
 
 ### Technical Implementation
@@ -167,7 +202,6 @@ During user registration, the following data is stored*:
 - Email address  
 - Password (hashed)  
 - Date joined  
-- Last login  
 
 ## Note Search
 
