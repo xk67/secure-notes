@@ -98,6 +98,15 @@ The note search functionality is implemented via a custom `search_note` view tha
 
 ### Potential Vulnerabilities and Mitigations
 
+**Broken Access Control**
+
+If access control checks are missing or incorrect, users could see
+notes they do not own, including private notes of other users.
+
+Mitigation: Use the ORM `filter()` function to ensure only public notes
+are returned and `user.notes.all()` to include all notes owned by the
+authenticated user.
+
 **Cross-Site Scripting (XSS)**
 
 - **Potential vulnerability**:  
@@ -185,5 +194,22 @@ During the note creation, the following personal data is stored:
 - note UUID
 
 Users have the right to delete their notes at any time*.
+
+## List Notes
+
+### Technical Implementation
+Note creation is handled via a custom
+[`create_note`](https://github.com/xk67/secure-notes/blob/main/src/notes/views/web.py#L15)
+view that uses a custom form based on  [ModelForm](https://docs.djangoproject.com/en/stable/topics/forms/modelforms/).
+
+An HTTP **POST** request is sent to `/notes/create` with the following
+`application/x-www-form-urlencoded` fields:
+
+  - `csrfmiddlewaretoken`
+  - `title`
+  - `content`
+  - `private`
+
+
 
 \* For more information on data processing and user rights, refer to the Secure Notes data protection page.
