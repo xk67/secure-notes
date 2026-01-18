@@ -1,4 +1,10 @@
 # Core Features
+This page explains the core features of the application in terms of functionality,
+security, and data protection.
+
+**Note**: Security concerns are not listed for every feature individually, because
+Django’s built-in authentication is enforced throughout the project, and CSRF
+protection is applied to all POST requests.
 
 ## Django Security
 
