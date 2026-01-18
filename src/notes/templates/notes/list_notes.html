@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block main%}
+<p><strong>Your Notes</strong></p>
 <ul>
     {% for note in notes_user %}
         <li><a href="{% url 'notes:view_note' uuid=note.uuid %}">{{ note.title }}</a></li>
@@ -12,6 +13,7 @@
         <li>You have not created any notes yet</li>
     {% endfor %}
 </ul>
+<p><strong>Other Notes</strong></p>
 <ul>
     {% for note in notes_all %}
         <li><a href="{% url 'notes:view_note' uuid=note.uuid %}">{{ note.title }}</a></li>
