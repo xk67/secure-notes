@@ -96,11 +96,13 @@ def delete(request):
 
             # No need to check confirm, handled by form.is_valid(
 
-            if not authenticate(username=username, password=password):
+            user = authenticate(username=username, password=password)
+
+            if not user:
                 form.add_error('password', 'Invalid password')
             else:
+                user.delete()
                 logout(request)
-                request.user.delete()
                 return redirect("index")
     else:
         form = DeleteForm()
