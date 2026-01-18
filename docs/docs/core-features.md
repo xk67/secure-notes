@@ -203,6 +203,38 @@ During user registration, the following data is stored*:
 - Password (hashed)  
 - Date joined  
 
+## Account Deletion
+
+### Technical Implementation
+
+Account deletion is handled via a custom
+[delete](https://github.com/xk67/secure-notes/blob/main/src/users/views.py#L89) view.
+
+An HTTP **POST** request is sent to `/delete` with the following
+`application/x-www-form-urlencoded` fields:
+
+- `csrfmiddlewaretoken`
+- `confirm`
+- `password`
+
+The account is deleted only if `confirm` is provided and the submitted
+`password` is verified against the currently authenticated user.
+
+### Potential Vulnerabilities and Mitigations
+
+**Unauthorized Account Deletion**
+
+If authentication or ownership checks were missing, an attacker could try
+to delete another user’s account.
+
+Mitigation: The view operates on the currently authenticated user only and
+verifies the user’s password before performing deletion.
+
+### Data Protection
+
+After account deletion, all personal data associated with the account,
+including notes, is permanently deleted*.
+
 ## Note Search
 
 The note search functionality is implemented via a custom `search_note` view that uses a custom form based on [Form](https://github.com/django/django/blob/stable/5.2.x/django/forms/forms.py#L432) class.
