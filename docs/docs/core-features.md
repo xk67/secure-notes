@@ -282,6 +282,89 @@ escaped.
 
 During the note search process no search queries or results are stored*.
 
+## Reset Password
+
+### Technical Implementation
+
+Password reset is fully handled by Django’s built-in authentication views:
+
+- `PasswordResetView`
+- `PasswordResetDoneView`
+- `PasswordResetConfirmView`
+- `PasswordResetCompleteView`
+
+Source code of the views:  
+https://github.com/django/django/blob/stable/5.2.x/django/contrib/auth/views.py
+
+First, an HTTP **POST** request is sent to `/password_reset` with the following  
+`application/x-www-form-urlencoded` fields:
+
+- `csrfmiddlewaretoken`
+- `email`
+
+An email is sent to the provided email address containing a password reset link
+in the following form: `/reset/<uidb64>/<token>`.
+
+After the user clicks the link, they are redirected to  
+`/reset/<uidb64>/set-password`, where a new password can be entered and confirmed.
+
+Submitting the form sends an HTTP **POST** request to  
+`/reset/<uidb64>/set-password` with the following  
+`application/x-www-form-urlencoded` fields:
+
+- `csrfmiddlewaretoken`
+- `new_password1`
+- `new_password2`
+
+The same password validators used during account creation are applied to ensure
+the new password is sufficiently strong. If valid, the new password is securely
+stored using Django’s password hashing mechanism explained at account creation section.
+
+The password reset token is single-use and becomes invalid immediately after
+the password is successfully changed. By default, the reset link is valid for
+3 days, configurable via `PASSWORD_RESET_TIMEOUT`.
+
+### Potential Vulnerabilities and Mitigations
+
+**User Enumeration**
+
+An attacker could attempt to determine whether an email address exists by
+observing password reset responses.
+
+Mitigation: Django always returns the same response regardless of whether the
+email exists, preventing user enumeration.
+
+**Token Abuse**
+
+If reset tokens were predictable or reusable, attackers could reset passwords
+without authorization.
+
+Mitigation: Django uses time-limited and single-use tokens
+that are invalidated after successful password reset.
+
+**User ID Disclosure (`uidb64`)**
+
+The password reset URL contains a Base64-encoded user ID, which could theoretically
+be used to infer the number of registered users.
+
+Mitigation: The `uidb64` value alone is insufficient to reset a password. A valid,
+time-limited token is also required, making enumeration impractical and non-exploitable.  
+To further prevent user ID leakage, the system could combine the user ID with a
+random value or use a fully random identifier in the reset URL instead of exposing
+`uidb64`. This ensures attackers cannot infer valid user IDs from the URL.
+
+**SQL Injection**
+
+User-controlled input (`email` and password fields) is processed during the reset
+workflow.
+
+Mitigation: Django’s ORM uses parameterized queries, ensuring SQL code and
+user-supplied values are handled separately and safely escaped by default.
+
+### Data Protection
+
+During the password reset process, only the new password hash is stored*.
+
 ## Note Creation
 
 ### Technical Implementation
