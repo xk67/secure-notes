@@ -59,3 +59,57 @@ curl -X POST http://localhost:8000/api/note/create \
 ```bash
 curl -X GET http://localhost:8000/api/note/<UUID> -H "Authorization: Token <TOKEN>"
 ```
+
+## Technical Implementation
+
+All API endpoints are implemented as Django REST Framework (DRF) API views.
+Each view is protected with the following decorators:
+
+```python
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+```
+
+The APILoginView is used to generate personal access tokens. Tokens are stored
+server-side in the database (knox_authtoken table) with the following fields:
+
+- `digest`: a secure hash of the full token stored as the primary key. Knox uses a strong hash algorithm: SHA‑512. 
+- `token_key`: the prefix or portion of the token stored for indexed lookup
+- `user_id`: reference to the `auth_user` table indicating the token’s owner.
+- `created`: timestamp for when the token was created.
+- `expiry`: expiration datetime after which the token is no longer valid.
+
+Custom [Serializers](https://github.com/xk67/secure-notes/blob/main/src/notes/serializers.py)
+handle JSON input and output. If required fields are missing or invalid, the serializer
+returns an error response to the user.
+
+## Potential Vulnerabilities and Mitigations
+
+**Unauthorized Access**
+
+If token authentication is not enforced, private notes could be exposed.
+
+Mitigation: All API views require a valid personal access token via
+TokenAuthentication and IsAuthenticated permission class.
+
+**Injection**
+
+User-supplied JSON (title, content, private) could be invalid or
+malicious.
+
+Mitigation: DRF serializers validate input and reject requests missing
+required fields or with invalid types.
+
+**Broken Access Control**
+
+If access control is missing, users could access
+others’ private notes.
+
+Mitigation: Each note view checks ownership or public status, and only
+returns data the authenticated user is allowed to see.
+
+## Data Protection
+
+Generated tokens are securely stored, and any notes created via the API are saved*.
+
+\* For more information on data processing and user rights, refer to the Secure Notes data protection page.
