@@ -14,6 +14,10 @@ Development Infrastructure and Workflow
 - Backend testing with the Django test framework
 - Build the application as a Docker image and publish it to the GitHub Container Registry on pushes to main or on releases
 
+**Security**
+
+For the GitHub Actions, I always use the SHA version to pin to a specific commit, rather than a release, which could change and potentially become malicious.
+
 ## IDE
 
 - At the beginning, I used Codium with Vim and Python extensions
