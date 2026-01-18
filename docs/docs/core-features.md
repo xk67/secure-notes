@@ -230,6 +230,55 @@ sanitized at creation.
 
 During the list note process nothing is stored*.
 
+## View Notes
+
+### Technical Implementation
+
+View note is handled via a custom
+[view_note](https://github.com/xk67/secure-notes/blob/main/src/notes/views/web.py#L49).
+
+An HTTP **GET** request is sent to `/notes/<uuid>` and returns the note
+identified by its UUID. Notes are rendered as HTML.
+
+To render the stored HTML content without Django escaping it, the view uses
+`mark_safe(note.content)`.
+
+There is also a **POST** endpoint to delete a note owned by the currently
+authenticated user. The request uses `application/x-www-form-urlencoded`
+fields:
+
+- `csrfmiddlewaretoken`
+- `confirm`
+
+### Potential Vulnerabilities and Mitigations
+
+**Broken Access Control (Deletion)**
+
+If access control checks are missing or incorrect, users could delete notes
+they do not own.
+
+Mitigation: Ensure the note is owned by the current user before allowing
+deletion (e.g., `if note.owner != request.user: ...`).
+
+**Cross-Site Scripting (XSS)**
+
+The note title, content, and username are rendered in the UI.
+
+Mitigation: Rely on server-side sanitization during note creation (title and content). Keep Django’s
+auto-escaping enabled for all other fields and only use `mark_safe` on
+content that has been sanitized.
+
+**SQL Injection**
+
+User-controlled input (`uuid`) is used to look up a note in the database.
+
+Mitigation: Django’s ORM uses parameterized queries, separating SQL from
+user-supplied values and safely escaping parameters.
+
+### Data Protection
+
+During the view note process nothing is stored*.
+
 ## Social Plugin
 
 ### Technical Implementation
