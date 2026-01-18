@@ -398,6 +398,33 @@ user-supplied values and safely escaping parameters.
 
 During the view note process nothing is stored*.
 
+## Preview Note
+
+### Technical Implementation
+
+Previewing a note is handled via a custom
+[preview_note](https://github.com/xk67/secure-notes/blob/main/src/notes/views/web.py#L106) view.
+
+An HTTP AJAX **POST** request is sent to `/note/preview` with the following
+`application/x-www-form-urlencoded` fields:
+
+- `csrfmiddlewaretoken`
+- `content`
+
+The internal `markdown2html_safe` function is called to convert and sanitize
+the content.
+
+For the AJAX request and rendering, [md-editor](https://github.com/xk67/secure-notes/blob/main/src/static/js/md-editor.js) is used.
+
+### Potential Vulnerabilities and Mitigations
+
+**Cross-Site Scripting (XSS)**
+
+User-provided content is rendered in the UI.
+
+Mitigation: Rely on server-side sanitization via `markdown2html_safe` during
+note preview.
+
 ## Social Plugin
 
 ### Technical Implementation
