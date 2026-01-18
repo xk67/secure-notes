@@ -57,6 +57,18 @@ application can enforce access control, for example:
 - Checking ownership of resources: `note.owner == request.user`
 - Filtering querysets to include only authorized objects: `Note.objects.filter(owner=request.user)`
 
+### Templating
+
+Django’s template system automatically escapes variables by default, which
+provides built-in protection against Cross-Site Scripting (XSS) attacks.
+
+When rendering user-provided data in templates, special characters are
+converted to safe HTML entities, preventing malicious scripts from executing.
+
+For more details, see the Django documentation on XSS protection:  
+[Cross-Site Scripting (XSS) Protection](https://docs.djangoproject.com/en/5.2/topics/security/#cross-site-scripting-xss-protection)
+
+
 ## User Registration
 
 ### Technical Implementation
