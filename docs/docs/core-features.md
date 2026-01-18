@@ -119,6 +119,24 @@ Mitigation: Use Django’s ORM and query parameterization to ensure that SQL cod
 
 After a successful login, session get stored and last login*.
 
+## User Logout
+
+### Technical Implementation
+
+User logout is handled by Django’s built-in
+[LogoutView](https://github.com/django/django/blob/stable/5.2.x/django/contrib/auth/views.py#L125) view.
+
+An HTTP **POST** request is sent to `/logout` with the following
+`application/x-www-form-urlencoded` field:
+
+- `csrfmiddlewaretoken`
+
+After logout, the user session is invalidated and the `sessionid` cookie
+is removed.
+
+### Data Protection
+
+During the logout process, no personal data is stored*.
 
 ## User Registration
 
