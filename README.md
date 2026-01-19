@@ -19,4 +19,4 @@ Or start both app and docs using:
 docker compose -f compose-docs.yml up --build
 ```
 
-To ensure full functionality (registration verification emails or password resets), start a mail service like MailHog to receive emails sent by the app.
+To ensure full functionality (such as registration verification emails or password resets), start a mail service like MailHog to receive emails sent by the app. Don’t forget to change the email IP in the env.dev file located in the src folder ;)
