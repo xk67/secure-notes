@@ -2,13 +2,21 @@
 
 Basic setup instructions for the development environment
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-Run the development server
+This project provides two Docker Compose files:
+
+- `compose.yml`: starts the app container on port 8000  
+- `compose-docs.yml`: starts the app on port 8000 and the documentation on port 3000
+
+Start the app using:
 
 ```bash
-python manage.py runserver
+docker compose -f compose.yml up --build
 ```
+
+Or start both app and docs using:
+
+```bash
+docker compose -f compose-docs.yml up --build
+```
+
+To ensure full functionality (registration verification emails or password resets), start a mail service like MailHog to receive emails sent by the app.
